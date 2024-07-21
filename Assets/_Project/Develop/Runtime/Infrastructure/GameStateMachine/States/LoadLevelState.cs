@@ -1,4 +1,3 @@
-using System;
 using Develop.Runtime.Services.SceneLoader;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine.States
@@ -28,7 +27,7 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
 
         public void Exit()
         {
-            //ToDo loading factories Cashe clear.
+            //ToDo loading factories Cache clear.
         }
     }
 }

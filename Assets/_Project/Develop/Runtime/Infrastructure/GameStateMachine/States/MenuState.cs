@@ -1,5 +1,4 @@
-﻿using System;
-using Develop.Runtime.Services.SceneLoader;
+﻿using Develop.Runtime.Services.SceneLoader;
 using UnityEngine;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine.States
