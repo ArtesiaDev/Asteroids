@@ -1,29 +1,30 @@
-﻿using System;
+﻿using Develop.Runtime.Services.SceneLoader;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine.States
 {
     public sealed class CoreState: IState
     {
         private readonly IStateMachine _stateMachine;
+        private readonly ISceneLoader _sceneLoader;
 
-        private CoreState(IStateMachine stateMachine)
+        private CoreState(IStateMachine stateMachine, ISceneLoader sceneLoader)
         {
             _stateMachine = stateMachine;
+            _sceneLoader = sceneLoader;
         }
         
         public async void Enter()
         {
-            throw new NotImplementedException();
+            await _sceneLoader.Load(Scene.Core, OnLoaded);
         }
 
         private void OnLoaded()
         {
-            throw new NotImplementedException();
         }
 
         public void Exit()
         {
-            throw new NotImplementedException();
+            // ToDo any saves if it needs.
         }
     }
 }
