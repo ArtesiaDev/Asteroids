@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Core.ShootingObjects;
 using Develop.Runtime.Infrastructure.Factories;
+using Develop.Runtime.Services.Input.InputActions;
 using UnityEngine;
 using Zenject;
 
@@ -10,15 +11,17 @@ namespace Develop.Runtime.Core.Starship
 {
     public class BulletShooting : IFixedTickable, IInitializable, IDisposable
     {
-        private readonly PlayerConfig _config;
+        private readonly IBulletShootingConfig _config;
+        private readonly IBulletShootAction _input;
         private readonly Transform _transform;
         private readonly BulletFactory _bulletFactory;
 
         private float _nextFireTime;
 
-        public BulletShooting(PlayerConfig config, Transform transform, BulletFactory bulletFactory)
+        public BulletShooting(IBulletShootingConfig config, IBulletShootAction input, Transform transform, BulletFactory bulletFactory)
         {
             _config = config;
+            _input = input;
             _transform = transform;
             _bulletFactory = bulletFactory;
         }
@@ -37,7 +40,7 @@ namespace Develop.Runtime.Core.Starship
 
         private async void Shoot()
         {
-            if (Input.GetKey(KeyCode.E) && Time.time > _nextFireTime)
+            if (_input.BulletShoot && Time.time > _nextFireTime)
             {
                 UpdateNextFireTime();
 

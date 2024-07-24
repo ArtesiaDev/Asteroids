@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Core.ShootingObjects;
 using Develop.Runtime.Infrastructure.Factories;
+using Develop.Runtime.Services.Input.InputActions;
 using UnityEngine;
 using Zenject;
 
@@ -11,16 +12,18 @@ namespace Develop.Runtime.Core.Starship
 {
     public class LaserShooting : IFixedTickable, IInitializable, IDisposable
     {
-        private readonly PlayerConfig _config;
+        private readonly ILaserShootingConfig _config;
+        private readonly ILaserShootAction _input;
         private readonly LaserFactory _laserFactory;
         private readonly Starship _starship;
 
         private int _currentLaserShots;
         private Coroutine _cooldown;
 
-        public LaserShooting(PlayerConfig config, LaserFactory laserFactory, Starship starship)
+        public LaserShooting(ILaserShootingConfig config, ILaserShootAction input, LaserFactory laserFactory, Starship starship)
         {
             _config = config;
+            _input = input;
             _laserFactory = laserFactory;
             _starship = starship;
             _currentLaserShots = _config.Ammunition;
@@ -43,7 +46,7 @@ namespace Develop.Runtime.Core.Starship
 
         private async void Shoot()
         {
-            if (Input.GetKey(KeyCode.Q))
+            if (_input.LaserShoot)
             {
                 if (_currentLaserShots > 0 && _cooldown == null)
                 {

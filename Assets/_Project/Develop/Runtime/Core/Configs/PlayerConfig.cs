@@ -3,7 +3,8 @@
 namespace Develop.Runtime.Core.Configs
 {
     [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Configs/PlayerConfig", order = 0)]
-    public class PlayerConfig : ScriptableObject
+    public class PlayerConfig : ScriptableObject, ISteeringConfig, IMoveConfig, IBulletShootingConfig,
+        ILaserShootingConfig
     {
         [field: Header("Steering System")]
         [field: SerializeField]
