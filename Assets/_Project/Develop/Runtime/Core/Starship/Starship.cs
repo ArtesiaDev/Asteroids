@@ -1,5 +1,6 @@
 ﻿using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Infrastructure.Factories;
+using Develop.Runtime.Services.Input;
 using UnityEngine;
 using Zenject;
 
@@ -18,23 +19,25 @@ namespace Develop.Runtime.Core.Starship
         private BulletFactory _bulletFactory;
         private LaserShooting _laserShooting;
         private LaserFactory _laserFactory;
+        private IInput _input;
 
         [Inject]
-        private void Construct(BulletFactory bulletFactory, LaserFactory laserFactory)
+        private void Construct(BulletFactory bulletFactory, LaserFactory laserFactory, IInput input)
         {
             _bulletFactory = bulletFactory;
             _laserFactory = laserFactory;
+            _input = input;
         }
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _moverSystem = new MoverSystem(_config, _rb, transform);
-            _steeringSystem = new SteeringSystem(_config, transform);
+            _moverSystem = new MoverSystem(_config, _input, _rb, transform);
+            _steeringSystem = new SteeringSystem(_config, _input, transform);
             _teleportationSystem = new TeleportationSystem(transform);
-            _bulletShooting = new BulletShooting(_config, transform, _bulletFactory);
+            _bulletShooting = new BulletShooting(_config, _input, transform, _bulletFactory);
             _bulletShooting.Initialize();
-            _laserShooting = new LaserShooting(_config, _laserFactory, this);
+            _laserShooting = new LaserShooting(_config, _input, _laserFactory, this);
             _laserShooting.Initialize();
         }
 
