@@ -21,12 +21,10 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
 
         private void OnLoaded()
         {
-           //_stateMachine.Enter<LoadLevelState>();
         }
 
         public void Exit()
         {
-            Debug.Log("[MenuState] Exit");
         }
     }
 }
