@@ -1,7 +1,7 @@
 ﻿using Develop.Runtime.Infrastructure.Factories;
 using Zenject;
 
-namespace Develop.Runtime.Installers
+namespace Develop.Runtime.Installers.ProjectContext
 {
     public sealed class FactoriesInstaller: MonoInstaller
     {

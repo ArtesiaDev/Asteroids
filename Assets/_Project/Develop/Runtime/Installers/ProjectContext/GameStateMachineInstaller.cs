@@ -2,7 +2,7 @@
 using Develop.Runtime.Infrastructure.GameStateMachine.States;
 using Zenject;
 
-namespace Develop.Runtime.Installers
+namespace Develop.Runtime.Installers.ProjectContext
 {
     public sealed class GameStateMachineInstaller : MonoInstaller
     {
