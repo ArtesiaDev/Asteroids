@@ -10,13 +10,13 @@ namespace Develop.Runtime.Core.Starship
 {
     public class BulletShooting : IFixedTickable, IInitializable, IDisposable
     {
-        private readonly PlayerConfig _config;
+        private readonly IBulletShootingConfig _config;
         private readonly Transform _transform;
         private readonly BulletFactory _bulletFactory;
 
         private float _nextFireTime;
 
-        public BulletShooting(PlayerConfig config, Transform transform, BulletFactory bulletFactory)
+        public BulletShooting(IBulletShootingConfig config, Transform transform, BulletFactory bulletFactory)
         {
             _config = config;
             _transform = transform;

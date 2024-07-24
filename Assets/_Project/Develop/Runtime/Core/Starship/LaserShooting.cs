@@ -11,14 +11,14 @@ namespace Develop.Runtime.Core.Starship
 {
     public class LaserShooting : IFixedTickable, IInitializable, IDisposable
     {
-        private readonly PlayerConfig _config;
+        private readonly ILaserShootingConfig _config;
         private readonly LaserFactory _laserFactory;
         private readonly Starship _starship;
 
         private int _currentLaserShots;
         private Coroutine _cooldown;
 
-        public LaserShooting(PlayerConfig config, LaserFactory laserFactory, Starship starship)
+        public LaserShooting(ILaserShootingConfig config, LaserFactory laserFactory, Starship starship)
         {
             _config = config;
             _laserFactory = laserFactory;

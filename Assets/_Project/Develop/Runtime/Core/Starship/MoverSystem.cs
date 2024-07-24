@@ -6,11 +6,11 @@ namespace Develop.Runtime.Core.Starship
 {
     public class MoverSystem : IFixedTickable
     {
-        private readonly PlayerConfig _config;
+        private readonly IMoveConfig _config;
         private readonly Rigidbody2D _rb;
         private readonly Transform _transform;
 
-        public MoverSystem(PlayerConfig config, Rigidbody2D rb, Transform transform)
+        public MoverSystem(IMoveConfig config, Rigidbody2D rb, Transform transform)
         {
             _config = config;
             _rb = rb;

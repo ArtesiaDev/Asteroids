@@ -6,10 +6,10 @@ namespace Develop.Runtime.Core.Starship
 {
     public class SteeringSystem : IFixedTickable
     {
-        private readonly PlayerConfig _config;
+        private readonly ISteeringConfig _config;
         private readonly Transform _transform;
 
-        public SteeringSystem(PlayerConfig config, Transform transform)
+        public SteeringSystem(ISteeringConfig config, Transform transform)
         {
             _config = config;
             _transform = transform;
