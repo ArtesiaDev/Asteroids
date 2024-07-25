@@ -12,6 +12,9 @@ namespace Develop.Runtime.Core.Starship
 {
     public class LaserShooting : IFixedTickable, IInitializable, IDisposable
     {
+        public static event Action<int> LaserAmmunitionChanged;
+        public static event Action<float> LaserCooldownChanged;
+        
         private readonly ILaserShootingConfig _config;
         private readonly ILaserShootAction _input;
         private readonly LaserFactory _laserFactory;
@@ -41,8 +44,11 @@ namespace Develop.Runtime.Core.Starship
             _starship.StopAllCoroutines();
         }
 
-        public void FixedTick() =>
+        public void FixedTick()
+        {
             Shoot();
+            LaserAmmunitionChanged?.Invoke(_currentLaserShots);
+        }
 
         private async void Shoot()
         {
@@ -72,6 +78,7 @@ namespace Develop.Runtime.Core.Starship
 
         private IEnumerator Cooldown()
         {
+            LaserCooldownChanged?.Invoke(_config.Cooldown);
             yield return new WaitForSeconds(_config.Cooldown);
             _cooldown = null;
         }
