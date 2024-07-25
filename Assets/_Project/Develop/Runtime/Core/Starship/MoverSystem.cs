@@ -1,4 +1,5 @@
-﻿using Develop.Runtime.Core.Configs;
+﻿using System;
+using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Services.Input.InputActions;
 using UnityEngine;
 using Zenject;
@@ -7,6 +8,8 @@ namespace Develop.Runtime.Core.Starship
 {
     public class MoverSystem : IFixedTickable
     {
+        public static event Action PlayerMoved;
+        
         private readonly IMoveConfig _config;
         private readonly IMoveAction _input;
         private readonly Rigidbody2D _rb;
@@ -29,6 +32,8 @@ namespace Develop.Runtime.Core.Starship
             {
                 Vector2 thrust = _transform.up * _config.ThrustPower;
                 _rb.AddForce(thrust, ForceMode2D.Force);
+                
+                PlayerMoved?.Invoke();
             }
         }
     }

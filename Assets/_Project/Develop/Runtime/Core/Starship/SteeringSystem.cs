@@ -1,4 +1,5 @@
-﻿using Develop.Runtime.Core.Configs;
+﻿using System;
+using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Services.Input.InputActions;
 using UnityEngine;
 using Zenject;
@@ -7,6 +8,8 @@ namespace Develop.Runtime.Core.Starship
 {
     public class SteeringSystem : IFixedTickable
     {
+        public static event Action PlayerSteered;
+        
         private readonly ISteeringConfig _config;
         private readonly ISteerAction _input;
         private readonly Transform _transform;
@@ -25,6 +28,8 @@ namespace Develop.Runtime.Core.Starship
         {
             float rotation = -_input.Steer * _config.RotationSpeed * Time.deltaTime;
             _transform.Rotate(0, 0, rotation);
+            
+            PlayerSteered?.Invoke();
         }
     }
 }
