@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Infrastructure.Factories;
 using UnityEngine;
@@ -9,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace Develop.Runtime.Core.Spawn
 {
-    public class AsteroidSpawner : MonoBehaviour
+    public class AsteroidSpawner : Spawner
     {
         [SerializeField] private EnemyConfig _config;
 
@@ -23,9 +24,12 @@ namespace Develop.Runtime.Core.Spawn
             _factory = factory;
         }
 
+        public async Task <Asteroid> CreateAsteroid(AsteroidTypes aster, Vector2 spawnPosition) => 
+            await _factory.Create(_asteroids[aster], spawnPosition, Quaternion.identity);
+
         private async void Awake()
         {
-            InitializeAsteroids();
+            _asteroids = InitializeAsteroids();
             _camera = Camera.main;
             _factory.CreateRoot();
             await _factory.PrepareAll(_asteroids);
@@ -59,31 +63,18 @@ namespace Develop.Runtime.Core.Spawn
 
                 if (IsPositionFree(spawnPosition, spawnRadius))
                 {
-                    await _factory.Create(_asteroids[aster], spawnPosition, Quaternion.identity);
+                    await CreateAsteroid(aster, spawnPosition);
                     break;
                 }
             }
         }
 
-        private void InitializeAsteroids()
-        {
-            _asteroids = new Dictionary<AsteroidTypes, string>()
-            {
-                { AsteroidTypes.AsterHuge1, "AsterHuge1" },
-                { AsteroidTypes.AsterHuge2, "AsterHuge2" },
-                { AsteroidTypes.AsterHuge3, "AsterHuge3" },
-                { AsteroidTypes.AsterMed1, "AsterMed1" },
-                { AsteroidTypes.AsterMed2, "AsterMed2" },
-                { AsteroidTypes.AsterMed3, "AsterMed3" },
-                { AsteroidTypes.AsterSmall1, "AsterSmall1" },
-                { AsteroidTypes.AsterSmall2, "AsterSmall2" },
-                { AsteroidTypes.AsterSmall3, "AsterSmall3" },
-            };
-        }
-
         private Vector2 GetRandomPositionInView()
         {
-            var pos = new Vector3(Random.Range(0f, Screen.width), Random.Range(0f, Screen.height));
+            var borderX = Screen.width * _config.SpawnBorderX / 100;
+            var borderY = Screen.height * _config.SpawnBorderY / 100;
+            
+            var pos = new Vector3(Random.Range(borderX, Screen.width - borderX), Random.Range(borderY, Screen.height - borderY));
             return _camera.ScreenToWorldPoint(pos);
         }
 

@@ -17,5 +17,17 @@ namespace Develop.Runtime.Core.Configs
         
         [field: SerializeField] 
         public float SmallSpawnRadius { get; private set; }
+
+        [field: SerializeField] 
+        public int FragmentsNumber { get; private set; }
+
+        [field: SerializeField] 
+        public float ExplosionForce { get; private set; }
+
+        [field: SerializeField, Range(0f, 100f)]
+        public int SpawnBorderX { get; private set; }
+
+        [field: SerializeField, Range(0f, 100f)]
+        public int SpawnBorderY { get; private set; }
     }
 }

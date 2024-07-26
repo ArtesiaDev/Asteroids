@@ -16,3 +16,7 @@ MonoBehaviour:
   <HugeSpawnRadius>k__BackingField: 1.3
   <MedSpawnRadius>k__BackingField: 0.7
   <SmallSpawnRadius>k__BackingField: 0.3
+  <FragmentsNumber>k__BackingField: 3
+  <ExplosionForce>k__BackingField: 1
+  <SpawnBorderX>k__BackingField: 5
+  <SpawnBorderY>k__BackingField: 7

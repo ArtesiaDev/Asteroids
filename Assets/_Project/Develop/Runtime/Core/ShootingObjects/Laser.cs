@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Develop.Runtime.Core.Spawn;
+using UnityEngine;
 
 namespace Develop.Runtime.Core.ShootingObjects
 {
@@ -11,7 +12,8 @@ namespace Develop.Runtime.Core.ShootingObjects
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Destroy(collision.gameObject);
+            if (collision.gameObject.TryGetComponent(out Asteroid asteroid))
+                asteroid.OnWeaponShoot();
         }
     }
 }
