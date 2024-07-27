@@ -10,6 +10,9 @@ namespace Develop.Runtime.Core.Spawn
     [RequireComponent(typeof(CircleCollider2D))]
     public class Asteroid : MonoBehaviour
     {
+        public static event Action PlayerDied;
+        public static event Action AsteroidDied;
+        
         [SerializeField] private EnemyConfig _config;
         [SerializeField] private AsteroidTypes _type;
 
@@ -60,10 +63,16 @@ namespace Develop.Runtime.Core.Spawn
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.TryGetComponent(out Starship.Starship player))
+            {
                 Destroy(other.gameObject);
+                PlayerDied?.Invoke();
+            }
         }
 
-        private void DestroyAsteroid() =>
+        private void DestroyAsteroid()
+        {
+            AsteroidDied?.Invoke();
             Destroy(gameObject);
+        }
     }
 }
