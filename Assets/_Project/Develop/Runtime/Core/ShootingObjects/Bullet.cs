@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Develop.Runtime.Core.Spawn;
+using UnityEngine;
 
 namespace Develop.Runtime.Core.ShootingObjects
 {
@@ -7,16 +8,21 @@ namespace Develop.Runtime.Core.ShootingObjects
     public class Bullet : MonoBehaviour
     {
         private Rigidbody2D _rb;
-        
+
         public void Shoot( Vector2 thrust, ForceMode2D forceMode) =>
             _rb.AddForce(thrust, forceMode);
 
         private void Awake() => 
             _rb = GetComponent<Rigidbody2D>();
 
-        private void OnCollisionEnter2D(Collision2D collision) =>
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.TryGetComponent(out Asteroid asteroid))
+                asteroid.OnWeaponShoot();
+            
             Destroy(gameObject);
-
+        }
+        
         private void OnBecameInvisible() =>
             Destroy(gameObject);
     }
