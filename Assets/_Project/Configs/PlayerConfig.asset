@@ -22,4 +22,4 @@ MonoBehaviour:
   <LaserOffsetCoefficient>k__BackingField: 0.8
   <Ammunition>k__BackingField: 2
   <LaserLifeTime>k__BackingField: 0.1
-  <ReloadTime>k__BackingField: 5
+  <ReloadTime>k__BackingField: 10
