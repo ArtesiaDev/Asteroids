@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Develop.Runtime.Meta
 {
-    public class Score : MonoBehaviour
+    public class Score : MonoBehaviour, IScoreCountable
     {
         private TextMeshProUGUI _score;
         private readonly StringBuilder _stringBuilder = new StringBuilder();

@@ -16,11 +16,11 @@ namespace Develop.Runtime.Meta
         [SerializeField] private GameObject _endPanelView;
         [SerializeField] private TextMeshProUGUI _finalScore;
         
-        private Score _scorePanel;
+        private IScoreCountable _scorePanel;
         private IStateMachine _stateMachine;
 
         [Inject]
-        private void Construct(IStateMachine stateMachine, Score scorePanel)
+        private void Construct(IStateMachine stateMachine, IScoreCountable scorePanel)
         {
             _stateMachine = stateMachine;
             _scorePanel = scorePanel;
