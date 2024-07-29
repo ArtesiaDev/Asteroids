@@ -11,7 +11,7 @@ namespace Develop.Runtime.Installers.ProjectContext
 
         private void BindGameStateMachine()
         {
-            Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<GameStateMachine>().AsSingle().NonLazy();
             
             Container.Bind<MenuState>().AsSingle().NonLazy();
             Container.Bind<LoadLevelState>().AsSingle().NonLazy();

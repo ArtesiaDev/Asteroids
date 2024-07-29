@@ -7,20 +7,14 @@ namespace Develop.Runtime.Installers.CoreContext
 {
     public sealed class MonobehInstaller : MonoInstaller
     {
+        [SerializeField] private AsteroidSpawner _asteroidSpawner;
+        [SerializeField] private Score _score;
+        
         public override void InstallBindings()
         {
-            BindMonobehavior<AsteroidSpawner>();
-            BindMonobehavior<Score>();
-        }
-
-        private void BindMonobehavior<T>() where T : MonoBehaviour
-        {
-            var instance = FindObjectOfType<T>();
-
-            if (instance == null)
-                Debug.LogWarning($"Instance of type: {typeof(T)}  not found.");
-
-            Container.BindInterfacesAndSelfTo<T>().FromInstance(instance).AsSingle();
+            Container.Bind<AsteroidSpawner>().FromInstance(_asteroidSpawner).AsSingle();
+            Container.BindInterfacesAndSelfTo<Score>().FromInstance(_score).AsSingle();
         }
     }
+    
 }

@@ -469,6 +469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfb079765d241898ac23b9600f30dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _asteroidSpawner: {fileID: 8769074873233961762}
+  _score: {fileID: 1616862650}
 --- !u!1 &407497176
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,6 +2744,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1a1ee3855ac7e44dbf53815f9b8cd1e, type: 3}
+--- !u!114 &8769074873233961762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 152492133089313575, guid: f1a1ee3855ac7e44dbf53815f9b8cd1e, type: 3}
+  m_PrefabInstance: {fileID: 8769074873233961761}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4961854d65614451a9f6aeb77105c9d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

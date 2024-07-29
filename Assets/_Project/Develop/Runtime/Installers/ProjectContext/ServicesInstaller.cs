@@ -27,13 +27,13 @@ namespace Develop.Runtime.Installers.ProjectContext
             Container.Bind<ISceneLoader>().To<AsyncSceneLoader>().AsSingle();
 
         private void BindAssetManagement() =>
-            Container.BindInterfacesAndSelfTo<AssetProvider>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<AssetProvider>().AsSingle().NonLazy();
 
         private void BindInput()
         {
             if (Application.isMobilePlatform)
-                Container.BindInterfacesAndSelfTo<MobileInput>().AsSingle().NonLazy();
-            else Container.BindInterfacesAndSelfTo<StandaloneInput>().AsSingle().NonLazy();
+                Container.BindInterfacesTo<MobileInput>().AsSingle().NonLazy();
+            else Container.BindInterfacesTo<StandaloneInput>().AsSingle().NonLazy();
         }
 
         private void BindCoroutinePerformer() =>
