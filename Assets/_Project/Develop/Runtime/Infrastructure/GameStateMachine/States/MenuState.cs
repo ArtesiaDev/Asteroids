@@ -19,6 +19,10 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
             await _sceneLoader.Load(Scene.Menu, OnLoaded);
         }
 
+        public void EditorDebugEnter()
+        {
+        }
+
         private void OnLoaded()
         {
         }

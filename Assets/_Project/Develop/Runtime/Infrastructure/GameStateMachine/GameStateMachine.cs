@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Develop.Runtime.Infrastructure.Factories;
 using Develop.Runtime.Infrastructure.GameStateMachine.States;
+using UnityEngine.SceneManagement;
 using Zenject;
+using Scene = Develop.Runtime.Services.SceneLoader.Scene;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine
 {
@@ -25,7 +28,23 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine
                 [typeof(LoadLevelState)] = _factory.Create<LoadLevelState>(),
                 [typeof(CoreState)] = _factory.Create<CoreState>(),
             };
-            Enter<MenuState>();
+            EnterStartState();
+        }
+
+        private void EnterStartState()
+        {
+            var scene = SceneManager.GetActiveScene().name;
+            
+            if (Enum.TryParse(scene, out Scene currentSceneEnum))
+            {
+                switch (currentSceneEnum)
+                {
+                    case Scene.Menu: Enter<MenuState>(); break;
+                    case Scene.Loading: EditorDebugEnter<LoadLevelState>(); break;
+                    case Scene.Core: EditorDebugEnter<CoreState>(); break;
+                }
+            }
+            else throw new InvalidEnumArgumentException();
         }
 
         public void Enter<T>() where T : IState
@@ -33,6 +52,12 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine
             _currentState?.Exit();
             _currentState = _states[typeof(T)];
             _currentState.Enter();
+        }
+
+        private void EditorDebugEnter<T>() where T : IState
+        {
+            _currentState = _states[typeof(T)];
+            _currentState.EditorDebugEnter();
         }
     }
 }
