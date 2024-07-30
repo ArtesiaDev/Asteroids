@@ -1,4 +1,5 @@
 ﻿using Develop.Runtime.Services.SceneLoader;
+using UnityEngine;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine.States
 {
@@ -16,6 +17,11 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
         public async void Enter()
         {
             await _sceneLoader.Load(Scene.Core, OnLoaded);
+        }
+
+        public void EditorDebugEnter()
+        {
+            Debug.LogWarning($"The {nameof(CoreState)} started in debug mode.");
         }
 
         private void OnLoaded()

@@ -1,6 +1,6 @@
-﻿using Develop.Runtime.Core.Spawn;
-using Develop.Runtime.Infrastructure.GameStateMachine;
+﻿using Develop.Runtime.Infrastructure.GameStateMachine;
 using Develop.Runtime.Infrastructure.GameStateMachine.States;
+using Develop.Runtime.Meta.EventSignals;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,28 +18,30 @@ namespace Develop.Runtime.Meta
         
         private IScoreCountable _scorePanel;
         private IStateMachine _stateMachine;
+        private IPlayerSignals _playerSignals;
 
         [Inject]
-        private void Construct(IStateMachine stateMachine, IScoreCountable scorePanel)
+        private void Construct(IStateMachine stateMachine, IScoreCountable scorePanel, IPlayerSignals playerSignals)
         {
             _stateMachine = stateMachine;
             _scorePanel = scorePanel;
+            _playerSignals = playerSignals;
         }
 
         private void OnEnable()
         {
             _retryButton.onClick.AddListener(ReloadGame);
             _menuButton.onClick.AddListener(ToMenu);
-            Asteroid.PlayerDied += EndGame;
-            Asteroid.PlayerDied += ShowFinalScore;
+            _playerSignals.PlayerDied += EndGame;
+            _playerSignals.PlayerDied += ShowFinalScore;
         }
 
         private void OnDisable()
         {
             _retryButton.onClick.RemoveAllListeners();
             _menuButton.onClick.RemoveAllListeners();
-            Asteroid.PlayerDied -= EndGame;
-            Asteroid.PlayerDied -= ShowFinalScore;
+            _playerSignals.PlayerDied -= EndGame;
+            _playerSignals.PlayerDied -= ShowFinalScore;
         }
 
         private void EndGame()

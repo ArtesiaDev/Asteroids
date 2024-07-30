@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
@@ -17,15 +16,17 @@ namespace Develop.Runtime.Core.Spawn
         private Dictionary<AsteroidTypes, string> _asteroids;
         private AsteroidsFactory _factory;
         private Camera _camera;
+        private bool _isEnabled;
 
         [Inject]
-        private void Construct(AsteroidsFactory factory)
-        {
+        private void Construct(AsteroidsFactory factory) =>
             _factory = factory;
-        }
 
         public async Task <Asteroid> CreateAsteroid(AsteroidTypes aster, Vector2 spawnPosition) => 
             await _factory.Create(_asteroids[aster], spawnPosition, Quaternion.identity);
+
+        public void DestroyAsteroid(GameObject asteroid) =>
+            _factory.Destroy(asteroid);
 
         private async void Awake()
         {
@@ -33,27 +34,30 @@ namespace Develop.Runtime.Core.Spawn
             _camera = Camera.main;
             _factory.CreateRoot();
             await _factory.PrepareAll(_asteroids);
-            StartCoroutine(SpawnMeteorRoutine());
         }
+
+        private void OnEnable() =>
+            _isEnabled = true;
 
         private void OnDisable()
         {
             _factory.ClearAll(_asteroids);
             StopAllCoroutines();
+            _isEnabled = false;
         }
 
-        private IEnumerator SpawnMeteorRoutine()
+        private async void Start()
         {
-            while (true)
+            while (_isEnabled)
             {
                 SpawnMeteor();
-                yield return new WaitForSeconds(_config.SpawnInterval);
+                await Task.Delay(_config.SpawnInterval);
             }
         }
 
         private async void SpawnMeteor()
         {
-            while (true)
+            for (int i = 0; i < _config.MaxSpawnTry; i++)
             {
                 var spawnPosition = GetRandomPositionInView();
                 

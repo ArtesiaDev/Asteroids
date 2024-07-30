@@ -23,6 +23,11 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
             await _sceneLoader.Load(Scene.Loading, OnLoaded);
         }
 
+        public void EditorDebugEnter()
+        {
+            Debug.LogWarning($"The {nameof(LoadLevelState)} started in debug mode.");
+        }
+
         private void OnLoaded()
         {
            // ToDo spawn everything what we need to load.

@@ -3,6 +3,7 @@
     public interface IState
     {
         public void Enter();
+        public void EditorDebugEnter();
         public void Exit();
     }
 }

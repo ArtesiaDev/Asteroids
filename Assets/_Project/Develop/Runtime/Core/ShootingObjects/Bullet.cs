@@ -15,11 +15,10 @@ namespace Develop.Runtime.Core.ShootingObjects
         private void Awake() => 
             _rb = GetComponent<Rigidbody2D>();
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            if (collision.gameObject.TryGetComponent(out Asteroid asteroid))
-                asteroid.OnWeaponShoot();
-            
+            // if (collision.gameObject.TryGetComponent(out Asteroid asteroid))
+            //     asteroid.OnWeaponShoot();
             Destroy(gameObject);
         }
         

@@ -1,7 +1,8 @@
 ﻿using System.Text;
-using Develop.Runtime.Core.Spawn;
+using Develop.Runtime.Meta.EventSignals;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Develop.Runtime.Meta
 {
@@ -9,8 +10,17 @@ namespace Develop.Runtime.Meta
     {
         private TextMeshProUGUI _score;
         private readonly StringBuilder _stringBuilder = new StringBuilder();
+
+        private IPlayerSignals _playerSignals;
+        private IAsteroidSignals _asteroidSignals;
         public int ScoreCount { get; private set; }
 
+        [Inject]
+        private void Construct(IPlayerSignals playerSignals, IAsteroidSignals asteroidSignals)
+        {
+            _playerSignals = playerSignals;
+            _asteroidSignals = asteroidSignals;
+        }
         private void Awake()
         {
             _score = GetComponentInChildren<TextMeshProUGUI>();
@@ -19,14 +29,14 @@ namespace Develop.Runtime.Meta
 
         private void OnEnable()
         {
-            Asteroid.AsteroidDied += UpdateScore;
-            Asteroid.PlayerDied += SwitchOf;
+            _asteroidSignals.AsteroidDied += UpdateScore;
+            _playerSignals.PlayerDied += SwitchOf;
         }
 
         private void OnDisable()
         {
-            Asteroid.AsteroidDied -= UpdateScore;
-            Asteroid.PlayerDied -= SwitchOf;
+            _asteroidSignals.AsteroidDied -= UpdateScore;
+            _playerSignals.PlayerDied -= SwitchOf;
         }
 
         private void UpdateScore()

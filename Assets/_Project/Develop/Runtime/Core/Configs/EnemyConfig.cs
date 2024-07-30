@@ -7,14 +7,17 @@ namespace Develop.Runtime.Core.Configs
     {
         [field: Header("Asteroid")]
         [field: SerializeField]
-        public float SpawnInterval { get; private set; }
-        
+        public int SpawnInterval { get; private set; }
+
+        [field: SerializeField] 
+        public int MaxSpawnTry { get; private set; }
+
         [field: SerializeField] 
         public float HugeSpawnRadius { get; private set; }
-        
+
         [field: SerializeField] 
         public float MedSpawnRadius { get; private set; }
-        
+
         [field: SerializeField] 
         public float SmallSpawnRadius { get; private set; }
 
