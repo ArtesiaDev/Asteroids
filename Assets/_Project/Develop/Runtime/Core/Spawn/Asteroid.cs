@@ -10,8 +10,8 @@ namespace Develop.Runtime.Core.Spawn
     [RequireComponent(typeof(CircleCollider2D))]
     public class Asteroid : MonoBehaviour
     {
-        public static event Action PlayerDied;
-        public static event Action AsteroidDied;
+        public event Action PlayerDied;
+        public event Action AsteroidDied;
         
         [SerializeField] private EnemyConfig _config;
         [SerializeField] private AsteroidTypes _type;

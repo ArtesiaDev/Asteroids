@@ -8,7 +8,7 @@ namespace Develop.Runtime.Core.Starship
 {
     public class MoverSystem : IFixedTickable
     {
-        public static event Action PlayerMoved;
+        public event Action PlayerMoved;
         
         private readonly IMoveConfig _config;
         private readonly IMoveAction _input;
@@ -32,9 +32,9 @@ namespace Develop.Runtime.Core.Starship
             {
                 Vector2 thrust = _transform.up * _config.ThrustPower;
                 _rb.AddForce(thrust, ForceMode2D.Force);
-                
-                PlayerMoved?.Invoke();
             }
+            
+            PlayerMoved?.Invoke();
         }
     }
 }

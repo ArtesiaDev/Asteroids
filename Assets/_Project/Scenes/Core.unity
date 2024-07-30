@@ -360,10 +360,9 @@ GameObject:
   m_Component:
   - component: {fileID: 386791039}
   - component: {fileID: 386791038}
-  - component: {fileID: 386791037}
-  - component: {fileID: 386791040}
   - component: {fileID: 386791041}
   - component: {fileID: 386791042}
+  - component: {fileID: 386791043}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -371,18 +370,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &386791037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386791036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9636c57c9723c4099644475e161214, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &386791038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,10 +384,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 386791037}
-  - {fileID: 386791040}
   - {fileID: 386791041}
   - {fileID: 386791042}
+  - {fileID: 386791043}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -433,18 +419,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &386791040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386791036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907417b5cd50493c930d2b94ceb08c24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &386791041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +445,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _asteroidSpawner: {fileID: 8769074873233961762}
   _score: {fileID: 1616862650}
+--- !u!114 &386791043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386791036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bafc9e4fe71f4d6193867eeb94c0ea7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &407497176
 GameObject:
   m_ObjectHideFlags: 0

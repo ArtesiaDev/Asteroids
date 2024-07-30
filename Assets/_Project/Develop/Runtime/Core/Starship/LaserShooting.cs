@@ -12,8 +12,8 @@ namespace Develop.Runtime.Core.Starship
 {
     public class LaserShooting : IFixedTickable, IInitializable, IDisposable
     {
-        public static event Action<int> LaserAmmunitionChanged;
-        public static event Action<float> LaserCooldownChanged;
+        public event Action<int> LaserAmmunitionChanged;
+        public event Action<float> LaserCooldownChanged;
         
         private readonly ILaserShootingConfig _config;
         private readonly ILaserShootAction _input;

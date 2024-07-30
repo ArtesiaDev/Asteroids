@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Text;
-using Develop.Runtime.Core.Starship;
+using Develop.Runtime.Meta.EventSignals;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Develop.Runtime.Meta
 {
@@ -18,36 +19,56 @@ namespace Develop.Runtime.Meta
         private TextMeshProUGUI _laserCooldown;
         private readonly StringBuilder _stringBuilder = new StringBuilder();
 
+        private IPlayerSignals _playerSignals;
+        private ILaserSignals _laserSignals;
+
+        [Inject]
+        private void Construct(IPlayerSignals playerSignals, ILaserSignals laserSignals)
+        {
+            _playerSignals = playerSignals;
+            _laserSignals = laserSignals;
+        }
+
         private void Awake()
         {
             _rb = _player.GetComponent<Rigidbody2D>();
-            
+
             TextMeshProUGUI[] childComponents = GetComponentsInChildren<TextMeshProUGUI>();
             foreach (TextMeshProUGUI component in childComponents)
-                switch (component.gameObject.name )
+                switch (component.gameObject.name)
                 {
-                    case MetaConstants.COORDINATES: _coordinates = component; break;
-                    case MetaConstants.ROTATION: _rotation = component; break;
-                    case MetaConstants.VELOCITY: _velocity = component; break;
-                    case MetaConstants.AMMUNITION: _laserAmmunition = component; break;
-                    case MetaConstants.COOLDOWN: _laserCooldown = component; break;
-                } 
+                    case MetaConstants.COORDINATES:
+                        _coordinates = component;
+                        break;
+                    case MetaConstants.ROTATION:
+                        _rotation = component;
+                        break;
+                    case MetaConstants.VELOCITY:
+                        _velocity = component;
+                        break;
+                    case MetaConstants.AMMUNITION:
+                        _laserAmmunition = component;
+                        break;
+                    case MetaConstants.COOLDOWN:
+                        _laserCooldown = component;
+                        break;
+                }
         }
 
         private void OnEnable()
         {
-            MoverSystem.PlayerMoved += OnPlayerMoved;
-            SteeringSystem.PlayerSteered += OnPlayerSteered;
-            LaserShooting.LaserAmmunitionChanged += OnLaserAmmunitionChanged;
-            LaserShooting.LaserCooldownChanged += OnLaserCooldownChanged;
+            _playerSignals.PlayerMoved += OnPlayerMoved;
+            _playerSignals.PlayerSteered += OnPlayerSignals;
+            _laserSignals.LaserAmmunitionChanged += OnLaserAmmunitionChanged;
+            _laserSignals.LaserCooldownChanged += OnLaserCooldownChanged;
         }
 
         private void OnDisable()
         {
-            MoverSystem.PlayerMoved -= OnPlayerMoved;
-            SteeringSystem.PlayerSteered -= OnPlayerSteered;
-            LaserShooting.LaserAmmunitionChanged -= OnLaserAmmunitionChanged;
-            LaserShooting.LaserCooldownChanged -= OnLaserCooldownChanged;
+            _playerSignals.PlayerMoved -= OnPlayerMoved;
+            _playerSignals.PlayerSteered -= OnPlayerSignals;
+            _laserSignals.LaserAmmunitionChanged -= OnLaserAmmunitionChanged;
+            _laserSignals.LaserCooldownChanged -= OnLaserCooldownChanged;
         }
 
         private void OnPlayerMoved()
@@ -56,7 +77,7 @@ namespace Develop.Runtime.Meta
             ChangeVelocity();
         }
 
-        private void OnPlayerSteered()
+        private void OnPlayerSignals()
         {
             _stringBuilder.Clear();
             _stringBuilder.AppendFormat("Rotation: {0:F0}", _player.transform.eulerAngles.z);
@@ -77,7 +98,7 @@ namespace Develop.Runtime.Meta
         {
             float step = 0.1f;
             float delay = 0.003f;
-            
+
             for (float i = time; i >= 0; i -= step)
             {
                 _stringBuilder.Clear();
@@ -90,7 +111,8 @@ namespace Develop.Runtime.Meta
         private void ChangeCoordinates()
         {
             _stringBuilder.Clear();
-            _stringBuilder.AppendFormat("Coordinates: ({0:F0}, {1:F0})", _player.transform.position.x, _player.transform.position.y);
+            _stringBuilder.AppendFormat("Coordinates: ({0:F0}, {1:F0})", _player.transform.position.x,
+                _player.transform.position.y);
             _coordinates.text = _stringBuilder.ToString();
         }
 

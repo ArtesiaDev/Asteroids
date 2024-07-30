@@ -8,7 +8,7 @@ namespace Develop.Runtime.Core.Starship
 {
     public class SteeringSystem : IFixedTickable
     {
-        public static event Action PlayerSteered;
+        public event Action PlayerSteered;
         
         private readonly ISteeringConfig _config;
         private readonly ISteerAction _input;
