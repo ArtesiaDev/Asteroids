@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Core.ShootingObjects;
 using Develop.Runtime.Infrastructure.Factories;
+using Develop.Runtime.Meta.EventSignals;
 using Develop.Runtime.Services.Input.InputActions;
 using UnityEngine;
 using Zenject;
@@ -14,22 +15,27 @@ namespace Develop.Runtime.Core.Starship
     {
         public event Action<int> LaserAmmunitionChanged;
         public event Action<float> LaserCooldownChanged;
-        
+
         private readonly ILaserShootingConfig _config;
         private readonly ILaserShootAction _input;
         private readonly LaserFactory _laserFactory;
         private readonly Starship _starship;
+        private readonly ILaserSignalsHandler _laserSignalsHandler;
 
         private int _currentLaserShots;
         private Coroutine _cooldown;
 
-        public LaserShooting(ILaserShootingConfig config, ILaserShootAction input, LaserFactory laserFactory, Starship starship)
+        public LaserShooting(ILaserShootingConfig config, ILaserShootAction input, LaserFactory laserFactory,
+            Starship starship, ILaserSignalsHandler laserSignalsHandler)
         {
             _config = config;
             _input = input;
             _laserFactory = laserFactory;
             _starship = starship;
             _currentLaserShots = _config.Ammunition;
+            _laserSignalsHandler = laserSignalsHandler;
+            LaserAmmunitionChanged += _laserSignalsHandler.OnLaserAmmunitionChanged;
+            LaserCooldownChanged += _laserSignalsHandler.OnLaserCooldownChanged;
         }
 
         public async void Initialize()
@@ -42,6 +48,8 @@ namespace Develop.Runtime.Core.Starship
         {
             _laserFactory.Clear();
             _starship.StopAllCoroutines();
+            LaserAmmunitionChanged -= _laserSignalsHandler.OnLaserAmmunitionChanged;
+            LaserCooldownChanged -= _laserSignalsHandler.OnLaserCooldownChanged;
         }
 
         public void FixedTick()

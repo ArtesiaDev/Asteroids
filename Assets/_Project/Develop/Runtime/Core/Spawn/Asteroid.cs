@@ -18,12 +18,10 @@ namespace Develop.Runtime.Core.Spawn
         private AsteroidSpawner _spawner;
 
         [Inject]
-        private void Construct(AsteroidSpawner spawner)
-        {
+        private void Construct(AsteroidSpawner spawner) =>
             _spawner = spawner;
-        }
 
-        private void OnWeaponShoot()
+        private void OnWeaponHit()
         {
             switch ((int)_type)
             {
@@ -62,7 +60,7 @@ namespace Develop.Runtime.Core.Spawn
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.gameObject.GetComponent<Asteroid>() == null)
-                OnWeaponShoot();
+                OnWeaponHit();
         }
 
         private void DestroyAsteroid()

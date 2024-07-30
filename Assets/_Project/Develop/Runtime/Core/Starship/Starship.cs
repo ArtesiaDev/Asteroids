@@ -17,7 +17,6 @@ namespace Develop.Runtime.Core.Starship
         [SerializeField] private PlayerConfig _config;
 
         private Rigidbody2D _rb;
-        private EdgeCollider2D _collider;
         private MoverSystem _moverSystem;
         private SteeringSystem _steeringSystem;
         private TeleportationSystem _teleportationSystem;
@@ -43,19 +42,18 @@ namespace Develop.Runtime.Core.Starship
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _collider = GetComponent<EdgeCollider2D>();
-            PlayerDied += _playerSignalsHandler.OnPlayerDied;
-            _moverSystem = new MoverSystem(_config, _input, _rb, transform);
-            _moverSystem.PlayerMoved += _playerSignalsHandler.OnPlayerMoved;
-            _steeringSystem = new SteeringSystem(_config, _input, transform);
-            _steeringSystem.PlayerSteered += _playerSignalsHandler.OnPlayerSteered;
+            _moverSystem = new MoverSystem(_config, _input, _rb, transform, _playerSignalsHandler);
+            _steeringSystem = new SteeringSystem(_config, _input, transform, _playerSignalsHandler);
             _teleportationSystem = new TeleportationSystem(transform);
             _bulletShooting = new BulletShooting(_config, _input, transform, _bulletFactory);
+            _laserShooting = new LaserShooting(_config, _input, _laserFactory, this, _laserSignalsHandler);
+        }
+
+        private void OnEnable()
+        {
+            PlayerDied += _playerSignalsHandler.OnPlayerDied;
             _bulletShooting.Initialize();
-            _laserShooting = new LaserShooting(_config, _input, _laserFactory, this);
             _laserShooting.Initialize();
-            _laserShooting.LaserAmmunitionChanged += _laserSignalsHandler.OnLaserAmmunitionChanged;
-            _laserShooting.LaserCooldownChanged += _laserSignalsHandler.OnLaserCooldownChanged;
         }
 
         private void FixedUpdate()
@@ -76,12 +74,10 @@ namespace Develop.Runtime.Core.Starship
         private void OnDisable()
         {
              PlayerDied -= _playerSignalsHandler.OnPlayerDied;
+             _moverSystem.Dispose();
+             _steeringSystem.Dispose();
             _bulletShooting.Dispose();
             _laserShooting.Dispose();
-            _moverSystem.PlayerMoved -= _playerSignalsHandler.OnPlayerMoved;
-            _steeringSystem.PlayerSteered -= _playerSignalsHandler.OnPlayerSteered;
-            _laserShooting.LaserAmmunitionChanged -= _laserSignalsHandler.OnLaserAmmunitionChanged;
-            _laserShooting.LaserCooldownChanged -= _laserSignalsHandler.OnLaserCooldownChanged;
         }
     }
 }
