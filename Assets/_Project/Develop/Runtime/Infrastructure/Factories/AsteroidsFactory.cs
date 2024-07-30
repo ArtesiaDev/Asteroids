@@ -13,16 +13,14 @@ namespace Develop.Runtime.Infrastructure.Factories
     {
         private readonly IAssetProvider _assetProvider;
         private readonly DiContainer _container;
-        private readonly IPlayerSignalsHandler _playerSignalsHandler;
         private readonly IAsteroidSignalsHandler _asteroidSignalsHandler;
         private Transform _parent;
 
         public AsteroidsFactory(DiContainer container, IAssetProvider assetProvider,
-            IPlayerSignalsHandler playerSignalsHandler, IAsteroidSignalsHandler asteroidSignalsHandler)
+            IAsteroidSignalsHandler asteroidSignalsHandler)
         {
             _container = container;
             _assetProvider = assetProvider;
-            _playerSignalsHandler = playerSignalsHandler;
             _asteroidSignalsHandler = asteroidSignalsHandler;
         }
 
@@ -40,7 +38,6 @@ namespace Develop.Runtime.Infrastructure.Factories
             var prefab = await _assetProvider.Load<GameObject>(key: prefabKey);
             var asteroid = _container.InstantiatePrefabForComponent<Asteroid>(prefab, position, rotation, _parent);
 
-            asteroid.PlayerDied += _playerSignalsHandler.OnPlayerDied;
             asteroid.AsteroidDied += _asteroidSignalsHandler.OnAsteroidDied;
 
             return asteroid;

@@ -1,4 +1,5 @@
-﻿using Develop.Runtime.Core.Configs;
+﻿using System;
+using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Infrastructure.Factories;
 using Develop.Runtime.Meta.EventSignals;
 using Develop.Runtime.Services.Input;
@@ -8,11 +9,15 @@ using Zenject;
 namespace Develop.Runtime.Core.Starship
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(EdgeCollider2D))]
     public class Starship : MonoBehaviour
     {
+        public event Action PlayerDied;
+        
         [SerializeField] private PlayerConfig _config;
 
         private Rigidbody2D _rb;
+        private EdgeCollider2D _collider;
         private MoverSystem _moverSystem;
         private SteeringSystem _steeringSystem;
         private TeleportationSystem _teleportationSystem;
@@ -38,6 +43,8 @@ namespace Develop.Runtime.Core.Starship
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _collider = GetComponent<EdgeCollider2D>();
+            PlayerDied += _playerSignalsHandler.OnPlayerDied;
             _moverSystem = new MoverSystem(_config, _input, _rb, transform);
             _moverSystem.PlayerMoved += _playerSignalsHandler.OnPlayerMoved;
             _steeringSystem = new SteeringSystem(_config, _input, transform);
@@ -60,8 +67,15 @@ namespace Develop.Runtime.Core.Starship
             _laserShooting.FixedTick();
         }
 
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            PlayerDied?.Invoke();
+            Destroy(gameObject);
+        }
+
         private void OnDisable()
         {
+             PlayerDied -= _playerSignalsHandler.OnPlayerDied;
             _bulletShooting.Dispose();
             _laserShooting.Dispose();
             _moverSystem.PlayerMoved -= _playerSignalsHandler.OnPlayerMoved;
