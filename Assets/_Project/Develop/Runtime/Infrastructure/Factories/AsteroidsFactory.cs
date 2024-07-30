@@ -37,10 +37,15 @@ namespace Develop.Runtime.Infrastructure.Factories
         {
             var prefab = await _assetProvider.Load<GameObject>(key: prefabKey);
             var asteroid = _container.InstantiatePrefabForComponent<Asteroid>(prefab, position, rotation, _parent);
-
             asteroid.AsteroidDied += _asteroidSignalsHandler.OnAsteroidDied;
-
             return asteroid;
+        }
+
+        public void Destroy(GameObject asteroid)
+        {
+            var asterScript = asteroid.GetComponent<Asteroid>();
+            asterScript.AsteroidDied -= _asteroidSignalsHandler.OnAsteroidDied;
+            UnityEngine.Object.Destroy(asteroid);
         }
 
         public void ClearAll<T>(Dictionary<T, string> prefabs) where T : Enum

@@ -25,6 +25,9 @@ namespace Develop.Runtime.Core.Spawn
         public async Task <Asteroid> CreateAsteroid(AsteroidTypes aster, Vector2 spawnPosition) => 
             await _factory.Create(_asteroids[aster], spawnPosition, Quaternion.identity);
 
+        public void DestroyAsteroid(GameObject asteroid) =>
+            _factory.Destroy(asteroid);
+
         private async void Awake()
         {
             _asteroids = InitializeAsteroids();

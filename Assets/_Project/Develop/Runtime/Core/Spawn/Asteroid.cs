@@ -66,7 +66,7 @@ namespace Develop.Runtime.Core.Spawn
         private void DestroyAsteroid()
         {
             AsteroidDied?.Invoke();
-            Destroy(gameObject);
+           _spawner.DestroyAsteroid(gameObject);
         }
     }
 }
