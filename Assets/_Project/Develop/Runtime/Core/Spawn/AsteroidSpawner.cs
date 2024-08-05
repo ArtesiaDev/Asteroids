@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Infrastructure.Factories;
 using UnityEngine;
@@ -12,11 +14,12 @@ namespace Develop.Runtime.Core.Spawn
     public class AsteroidSpawner : Spawner
     {
         [SerializeField] private EnemyConfig _config;
+        [SerializeField] private Starship.Starship _starship;
 
         private Dictionary<AsteroidTypes, string> _asteroids;
         private AsteroidsFactory _factory;
         private Camera _camera;
-        private bool _isEnabled;
+        private CancellationTokenSource _cancellationTokenSource;
 
         [Inject]
         private void Construct(AsteroidsFactory factory) =>
@@ -33,25 +36,28 @@ namespace Develop.Runtime.Core.Spawn
             _asteroids = InitializeAsteroids();
             _camera = Camera.main;
             _factory.CreateRoot();
+            _cancellationTokenSource = new CancellationTokenSource();
             await _factory.PrepareAll(_asteroids);
         }
-
-        private void OnEnable() =>
-            _isEnabled = true;
 
         private void OnDisable()
         {
             _factory.ClearAll(_asteroids);
-            StopAllCoroutines();
-            _isEnabled = false;
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
         }
 
         private async void Start()
         {
-            while (_isEnabled)
+            while (_starship != null)
             {
                 SpawnMeteor();
-                await Task.Delay(_config.SpawnInterval);
+               try
+               {
+                   await UniTask.Delay(TimeSpan.FromSeconds(_config.SpawnInterval), DelayType.DeltaTime,
+                       PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
+               }
+               catch { break; }
             }
         }
 

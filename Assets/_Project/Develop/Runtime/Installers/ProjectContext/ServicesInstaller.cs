@@ -1,8 +1,6 @@
 ﻿using Develop.Runtime.Services.AssetManagement;
-using Develop.Runtime.Services.CoroutinePerformer;
 using Develop.Runtime.Services.Input;
 using Develop.Runtime.Services.SceneLoader;
-using UnityEngine;
 using Zenject;
 using Application = UnityEngine.Device.Application;
 
@@ -10,17 +8,11 @@ namespace Develop.Runtime.Installers.ProjectContext
 {
     public sealed class ServicesInstaller: MonoInstaller
     {
-        [SerializeField] private CoroutinePerformer _coroutinePerformer;
-
-        private void OnValidate() =>
-            _coroutinePerformer ??= GetComponent<CoroutinePerformer>();
-        
         public override void InstallBindings()
         {
             BindAssetManagement();
             BindSceneLoader();
             BindInput();
-            BindCoroutinePerformer();
         }
 
         private void BindSceneLoader() =>
@@ -35,8 +27,5 @@ namespace Develop.Runtime.Installers.ProjectContext
                 Container.BindInterfacesTo<MobileInput>().AsSingle().NonLazy();
             else Container.BindInterfacesTo<StandaloneInput>().AsSingle().NonLazy();
         }
-
-        private void BindCoroutinePerformer() =>
-            Container.Bind<ICoroutinePerformer>().FromInstance(_coroutinePerformer).AsSingle().NonLazy();
     }
 }

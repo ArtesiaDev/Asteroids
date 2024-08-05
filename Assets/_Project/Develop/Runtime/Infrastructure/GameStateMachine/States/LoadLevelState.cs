@@ -1,23 +1,20 @@
-using System.Collections;
-using Develop.Runtime.Services.CoroutinePerformer;
+using Cysharp.Threading.Tasks;
 using Develop.Runtime.Services.SceneLoader;
 using UnityEngine;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine.States
 {
-    public sealed class LoadLevelState: IState
+    public sealed class LoadLevelState : IState
     {
         private readonly IStateMachine _stateMachine;
         private readonly ISceneLoader _sceneLoader;
-        private readonly ICoroutinePerformer _coroutinePerformer;
 
-        private LoadLevelState(IStateMachine stateMachine, ISceneLoader sceneLoader, ICoroutinePerformer coroutinePerformer)
+        private LoadLevelState(IStateMachine stateMachine, ISceneLoader sceneLoader)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
-            _coroutinePerformer = coroutinePerformer;
         }
-        
+
         public async void Enter()
         {
             await _sceneLoader.Load(Scene.Loading, OnLoaded);
@@ -28,11 +25,10 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
             Debug.LogWarning($"The {nameof(LoadLevelState)} started in debug mode.");
         }
 
-        private void OnLoaded()
+        private async void OnLoaded()
         {
-           // ToDo spawn everything what we need to load.
-
-           _coroutinePerformer.StartPerform(WaitLoading());
+            // ToDo spawn everything what we need to load.
+            await WaitLoading();
         }
 
         public void Exit()
@@ -40,9 +36,9 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
             //ToDo loading factories Cache clear.
         }
 
-        private IEnumerator WaitLoading()
+        private async UniTask WaitLoading()
         {
-            yield return new WaitForSeconds(1f);
+            await UniTask.WaitForSeconds(1f);
             _stateMachine.Enter<CoreState>();
         }
     }

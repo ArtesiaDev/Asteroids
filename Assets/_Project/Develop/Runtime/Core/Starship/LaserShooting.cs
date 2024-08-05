@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Core.ShootingObjects;
 using Develop.Runtime.Infrastructure.Factories;
 using Develop.Runtime.Meta.EventSignals;
 using Develop.Runtime.Services.Input.InputActions;
-using UnityEngine;
 using Zenject;
 
 namespace Develop.Runtime.Core.Starship
@@ -23,7 +23,8 @@ namespace Develop.Runtime.Core.Starship
         private readonly ILaserSignalsHandler _laserSignalsHandler;
 
         private int _currentLaserShots;
-        private Coroutine _cooldown;
+        private bool _isCooldown;
+        private CancellationTokenSource _cancellationTokenSource;
 
         public LaserShooting(ILaserShootingConfig config, ILaserShootAction input, LaserFactory laserFactory,
             Starship starship, ILaserSignalsHandler laserSignalsHandler)
@@ -40,14 +41,16 @@ namespace Develop.Runtime.Core.Starship
 
         public async void Initialize()
         {
+            _cancellationTokenSource = new CancellationTokenSource();
             await _laserFactory.Prepare();
-            _starship.StartCoroutine(Reload());
+            await Reload();
         }
 
         public void Dispose()
         {
             _laserFactory.Clear();
-            _starship.StopAllCoroutines();
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
             LaserAmmunitionChanged -= _laserSignalsHandler.OnLaserAmmunitionChanged;
             LaserCooldownChanged -= _laserSignalsHandler.OnLaserCooldownChanged;
         }
@@ -62,7 +65,7 @@ namespace Develop.Runtime.Core.Starship
         {
             if (_input.LaserShoot)
             {
-                if (_currentLaserShots > 0 && _cooldown == null)
+                if (_currentLaserShots > 0 && !_isCooldown)
                 {
                     _currentLaserShots--;
 
@@ -70,25 +73,37 @@ namespace Develop.Runtime.Core.Starship
 
                     laser.Destroy(_config.LaserLifeTime);
 
-                    _cooldown = _starship.StartCoroutine(Cooldown());
+                    await Cooldown();
                 }
             }
         }
 
-        private IEnumerator Reload()
+        private async UniTask Reload()
         {
-            while (true)
+            while (_starship != null)
             {
-                yield return new WaitForSeconds(_config.ReloadTime);
+                try
+                {
+                    await UniTask.Delay(TimeSpan.FromSeconds(_config.ReloadTime), DelayType.DeltaTime,
+                        PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
+                }
+                catch { break; }
+
                 _currentLaserShots++;
             }
         }
 
-        private IEnumerator Cooldown()
+        private async UniTask Cooldown()
         {
+            _isCooldown = true;
             LaserCooldownChanged?.Invoke(_config.Cooldown);
-            yield return new WaitForSeconds(_config.Cooldown);
-            _cooldown = null;
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(_config.Cooldown), DelayType.DeltaTime,
+                    PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
+            }
+            catch {}
+            _isCooldown = false;
         }
 
         private async Task<Laser> CreateLaser()

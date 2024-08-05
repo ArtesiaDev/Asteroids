@@ -8,7 +8,7 @@ namespace Develop.Runtime.Infrastructure.Factories
 {
     public sealed class LaserFactory
     {
-        private const string LASER = "Laser";
+        private const string Laser = "Laser";
         private readonly IAssetProvider _assetProvider;
         private readonly DiContainer _container;
 
@@ -19,15 +19,15 @@ namespace Develop.Runtime.Infrastructure.Factories
         }
         
         public async Task Prepare() =>
-            await _assetProvider.Load<GameObject>(key: LASER);
+            await _assetProvider.Load<GameObject>(key: Laser);
     
         public async Task<Laser> Create(Vector3 position, Quaternion rotation)
         {
-            var prefab = await _assetProvider.Load<GameObject>(key: LASER);
+            var prefab = await _assetProvider.Load<GameObject>(key: Laser);
             return _container.InstantiatePrefabForComponent<Laser>(prefab, position, rotation, null);
         }
         
         public void Clear() =>
-            _assetProvider.Release(key: LASER);
+            _assetProvider.Release(key: Laser);
     }
 }

@@ -25,7 +25,7 @@ namespace Develop.Runtime.Core.Configs
 
         [field: SerializeField] public float Speed { get; private set; }
 
-        [field: Header("LaserShooting")]
+        [field: Header("Player")]
         [field: SerializeField]
         public float Cooldown { get; private set; }
 

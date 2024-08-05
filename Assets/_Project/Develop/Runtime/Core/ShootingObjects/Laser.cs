@@ -1,5 +1,4 @@
-﻿using Develop.Runtime.Core.Spawn;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Develop.Runtime.Core.ShootingObjects
 {

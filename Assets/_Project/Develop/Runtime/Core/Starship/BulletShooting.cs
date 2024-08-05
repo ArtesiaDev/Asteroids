@@ -28,8 +28,8 @@ namespace Develop.Runtime.Core.Starship
 
         public async void Initialize()
         {
-            await _bulletFactory.Prepare();
             _bulletFactory.CreateRoot();
+            await _bulletFactory.Prepare();
         }
 
         public void Dispose() =>

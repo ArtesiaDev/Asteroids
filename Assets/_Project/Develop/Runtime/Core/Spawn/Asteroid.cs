@@ -45,7 +45,7 @@ namespace Develop.Runtime.Core.Spawn
 
         private async void SplitAsteroid (AsteroidTypes fragmentType)
         {
-            for (int i = 0; i < _config.FragmentsNumber; i++)
+            for (var i = 0; i < _config.FragmentsNumber; i++)
             {
                 Asteroid fragment = await _spawner.CreateAsteroid(fragmentType, transform.position);
 

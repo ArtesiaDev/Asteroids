@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Text;
+using Cysharp.Threading.Tasks;
 using Develop.Runtime.Meta.EventSignals;
 using TMPro;
 using UnityEngine;
@@ -87,14 +88,14 @@ namespace Develop.Runtime.Meta
         private void OnLaserAmmunitionChanged(int currentLaserShots)
         {
             _stringBuilder.Clear();
-            _stringBuilder.AppendFormat("LaserAmmunition: {0}", currentLaserShots);
+            _stringBuilder.AppendFormat("Laser Ammunition: {0}", currentLaserShots);
             _laserAmmunition.text = _stringBuilder.ToString();
         }
 
-        private void OnLaserCooldownChanged(float cooldown) =>
-            StartCoroutine(CooldownTimer(cooldown));
+        private async void OnLaserCooldownChanged(float cooldown) =>
+           await CooldownTimer(cooldown);
 
-        private IEnumerator CooldownTimer(float time)
+        private async UniTask CooldownTimer(float time)
         {
             float step = 0.1f;
             float delay = 0.003f;
@@ -102,9 +103,9 @@ namespace Develop.Runtime.Meta
             for (float i = time; i >= 0; i -= step)
             {
                 _stringBuilder.Clear();
-                _stringBuilder.AppendFormat("LaserAmmunition: {0:F1}", i);
+                _stringBuilder.AppendFormat("Laser Cooldown: {0:F1}", i);
                 _laserCooldown.text = _stringBuilder.ToString();
-                yield return new WaitForSeconds(step - delay);
+                await UniTask.WaitForSeconds(step - delay);
             }
         }
 

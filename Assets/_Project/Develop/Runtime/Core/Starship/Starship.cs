@@ -65,7 +65,7 @@ namespace Develop.Runtime.Core.Starship
             _laserShooting.FixedTick();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionEnter2D()
         {
             PlayerDied?.Invoke();
             Destroy(gameObject);
