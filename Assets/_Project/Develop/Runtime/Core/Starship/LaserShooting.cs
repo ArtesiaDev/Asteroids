@@ -7,24 +7,23 @@ using Develop.Runtime.Core.ShootingObjects;
 using Develop.Runtime.EventSignals;
 using Develop.Runtime.Infrastructure.Factories;
 using Develop.Runtime.Services.Input.InputActions;
+using R3;
 using Zenject;
 
 namespace Develop.Runtime.Core.Starship
 {
     public class LaserShooting : IFixedTickable, IInitializable, IDisposable
     {
-        public event Action<int> LaserAmmunitionChanged;
-        public event Action<float> LaserCooldownChanged;
+        private readonly ReactiveProperty<int> _laserAmmunition = new ReactiveProperty<int>();
+        private readonly ReactiveProperty<float> _laserCooldown = new ReactiveProperty<float>();
 
         private readonly ILaserShootingConfig _config;
         private readonly ILaserShootAction _input;
         private readonly LaserFactory _laserFactory;
         private readonly Starship _starship;
         private readonly ILaserSignalsHandler _laserSignalsHandler;
-
-        private int _currentLaserShots;
-        private bool _isCooldown;
-        private CancellationTokenSource _cancellationTokenSource;
+        private readonly CompositeDisposable _disposable = new CompositeDisposable();
+        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         public LaserShooting(ILaserShootingConfig config, ILaserShootAction input, LaserFactory laserFactory,
             Starship starship, ILaserSignalsHandler laserSignalsHandler)
@@ -33,15 +32,14 @@ namespace Develop.Runtime.Core.Starship
             _input = input;
             _laserFactory = laserFactory;
             _starship = starship;
-            _currentLaserShots = _config.Ammunition;
             _laserSignalsHandler = laserSignalsHandler;
-            LaserAmmunitionChanged += _laserSignalsHandler.OnLaserAmmunitionChanged;
-            LaserCooldownChanged += _laserSignalsHandler.OnLaserCooldownChanged;
         }
 
         public async void Initialize()
         {
-            _cancellationTokenSource = new CancellationTokenSource();
+            _laserAmmunition.Subscribe(value => _laserSignalsHandler.OnLaserAmmunitionChanged(value)).AddTo(_disposable);
+            _laserCooldown.Subscribe(value => _laserSignalsHandler.OnLaserCooldownChanged(value)).AddTo(_disposable);
+            _laserAmmunition.Value = _config.Ammunition;
             await _laserFactory.Prepare();
             await Reload();
         }
@@ -51,23 +49,19 @@ namespace Develop.Runtime.Core.Starship
             _laserFactory.Clear();
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
-            LaserAmmunitionChanged -= _laserSignalsHandler.OnLaserAmmunitionChanged;
-            LaserCooldownChanged -= _laserSignalsHandler.OnLaserCooldownChanged;
+           _disposable.Dispose();
         }
 
-        public void FixedTick()
-        {
+        public void FixedTick() =>
             Shoot();
-            LaserAmmunitionChanged?.Invoke(_currentLaserShots);
-        }
 
         private async void Shoot()
         {
             if (_input.LaserShoot)
             {
-                if (_currentLaserShots > 0 && !_isCooldown)
+                if (_laserAmmunition.Value > 0 && _laserCooldown.Value == 0)
                 {
-                    _currentLaserShots--;
+                   _laserAmmunition.Value--;
 
                     var laser = await CreateLaser();
 
@@ -87,23 +81,24 @@ namespace Develop.Runtime.Core.Starship
                     await UniTask.Delay(TimeSpan.FromSeconds(_config.ReloadTime), DelayType.DeltaTime,
                         PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
                 }
-                catch { break; }
+                catch {break;}
 
-                _currentLaserShots++;
+                _laserAmmunition.Value++;
             }
         }
 
         private async UniTask Cooldown()
         {
-            _isCooldown = true;
-            LaserCooldownChanged?.Invoke(_config.Cooldown);
+            _laserCooldown.Value = _config.Cooldown;
+            
             try
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(_config.Cooldown), DelayType.DeltaTime,
                     PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
             }
-            catch {}
-            _isCooldown = false;
+            catch { }
+
+            _laserCooldown.Value = 0f;
         }
 
         private async Task<Laser> CreateLaser()

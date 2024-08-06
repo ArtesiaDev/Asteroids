@@ -1,10 +1,11 @@
 ﻿using System;
+using R3;
 
 namespace Develop.Runtime.EventSignals
 {
     internal interface ILaserSignals
     {
-        event Action<int> LaserAmmunitionChanged;
-        event Action<float> LaserCooldownChanged;
+        Observable<int> LaserAmmunition { get; }
+        Observable<float> LaserCooldown { get; }
     }
 }

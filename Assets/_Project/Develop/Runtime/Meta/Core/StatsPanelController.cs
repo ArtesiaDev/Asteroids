@@ -1,16 +1,18 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using Develop.Runtime.EventSignals;
+using R3;
 using Zenject;
 
 namespace Develop.Runtime.Meta.Core
 {
-    public class StatsPanelController: IInitializable, IDisposable
+    public class StatsPanelController : IInitializable, IDisposable
     {
         private IPlayerSignals _playerSignals;
         private ILaserSignals _laserSignals;
         private StatsPanelView _view;
-        
+        private readonly CompositeDisposable _disposable = new CompositeDisposable();
+
         [Inject]
         private void Construct(IPlayerSignals playerSignals, ILaserSignals laserSignals, StatsPanelView view)
         {
@@ -18,23 +20,23 @@ namespace Develop.Runtime.Meta.Core
             _laserSignals = laserSignals;
             _view = view;
         }
-        
+
         public void Initialize()
         {
             _playerSignals.PlayerMoved += OnPlayerMoved;
             _playerSignals.PlayerSteered += OnPlayerSteered;
-            _laserSignals.LaserAmmunitionChanged += OnLaserAmmunitionChanged;
-            _laserSignals.LaserCooldownChanged += OnLaserCooldownChanged;
+            _laserSignals.LaserAmmunition.Subscribe(OnLaserAmmunitionChanged).AddTo(_disposable);
+            _laserSignals.LaserCooldown.Subscribe(OnLaserCooldownChanged).AddTo(_disposable);
+
         }
 
         public void Dispose()
         {
             _playerSignals.PlayerMoved -= OnPlayerMoved;
             _playerSignals.PlayerSteered -= OnPlayerSteered;
-            _laserSignals.LaserAmmunitionChanged -= OnLaserAmmunitionChanged;
-            _laserSignals.LaserCooldownChanged -= OnLaserCooldownChanged;
+            _disposable.Dispose();
         }
-        
+
         private void OnPlayerMoved()
         {
             _view.RerenderCoordinates();
