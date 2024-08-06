@@ -310,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 257411823}
   - component: {fileID: 257411822}
+  - component: {fileID: 257411824}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -330,7 +331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 257411824}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -363,6 +365,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &257411824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 257411821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434e1763e341444b962c8177ecbeadcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _menuUIView: {fileID: 2131850617}
 --- !u!1 &337928202
 GameObject:
   m_ObjectHideFlags: 0
@@ -2595,7 +2610,7 @@ GameObject:
   - component: {fileID: 2131850618}
   - component: {fileID: 2131850617}
   m_Layer: 0
-  m_Name: MenuHandler
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2638,8 +2653,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1934493425}
   - {fileID: 257411823}
+  - {fileID: 2131850618}
   - {fileID: 1983642986}
   - {fileID: 207134481}
   - {fileID: 1051870561}
   - {fileID: 1814582220}
-  - {fileID: 2131850618}
