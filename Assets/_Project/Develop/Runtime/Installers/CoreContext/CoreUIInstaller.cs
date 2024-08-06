@@ -16,7 +16,7 @@ namespace Develop.Runtime.Installers.CoreContext
             Container.Bind<ScoreView>().FromInstance(_scoreView).AsSingle();
             Container.BindInterfacesAndSelfTo<ScoreController>().AsSingle();
             Container.Bind<EndPanelView>().FromInstance(_endPanelView).AsSingle();
-            Container.BindInterfacesAndSelfTo<EndPanelViewPresenter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EndPanelPresenter>().AsSingle();
             Container.Bind<CoreUIModel>().AsSingle();
         }
     }

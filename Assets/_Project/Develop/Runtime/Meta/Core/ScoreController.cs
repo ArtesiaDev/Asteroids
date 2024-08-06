@@ -1,5 +1,5 @@
 ﻿using System;
-using Develop.Runtime.Meta.EventSignals;
+using Develop.Runtime.EventSignals;
 using Zenject;
 
 namespace Develop.Runtime.Meta.Core

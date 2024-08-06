@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Develop.Runtime.Meta.EventSignals
+namespace Develop.Runtime.EventSignals
 {
     public class LaserSignals: ILaserSignals, ILaserSignalsHandler
     {

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace Develop.Runtime.Meta.Core
 {

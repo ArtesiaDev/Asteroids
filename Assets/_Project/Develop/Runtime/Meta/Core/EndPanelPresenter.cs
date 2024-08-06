@@ -1,13 +1,13 @@
 ﻿using System;
+using Develop.Runtime.EventSignals;
 using Develop.Runtime.Infrastructure.GameStateMachine;
 using Develop.Runtime.Infrastructure.GameStateMachine.States;
-using Develop.Runtime.Meta.EventSignals;
 using UnityEngine;
 using Zenject;
 
 namespace Develop.Runtime.Meta.Core
 {
-    public class EndPanelViewPresenter : IInitializable, IDisposable
+    public class EndPanelPresenter : IInitializable, IDisposable
     {
         private IPlayerSignals _playerSignals;
         private IStateMachine _stateMachine;

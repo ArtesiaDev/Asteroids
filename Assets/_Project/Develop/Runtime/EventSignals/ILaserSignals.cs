@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Develop.Runtime.Meta.EventSignals
+namespace Develop.Runtime.EventSignals
 {
     internal interface ILaserSignals
     {

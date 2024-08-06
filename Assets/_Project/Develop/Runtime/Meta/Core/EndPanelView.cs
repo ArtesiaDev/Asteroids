@@ -13,10 +13,10 @@ namespace Develop.Runtime.Meta.Core
         [SerializeField] private GameObject _endPanelView;
         [SerializeField] private TextMeshProUGUI _finalScore;
 
-        private EndPanelViewPresenter _presenter;
+        private EndPanelPresenter _presenter;
 
         [Inject]
-        private void Construct(EndPanelViewPresenter presenter) =>
+        private void Construct(EndPanelPresenter presenter) =>
             _presenter = presenter;
 
         public void RenderFinalScore(int newValue) =>

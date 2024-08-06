@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Develop.Runtime.Core.Configs;
 using Develop.Runtime.Core.ShootingObjects;
+using Develop.Runtime.EventSignals;
 using Develop.Runtime.Infrastructure.Factories;
-using Develop.Runtime.Meta.EventSignals;
 using Develop.Runtime.Services.Input.InputActions;
 using Zenject;
 

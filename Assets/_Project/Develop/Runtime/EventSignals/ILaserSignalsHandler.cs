@@ -1,4 +1,4 @@
-﻿namespace Develop.Runtime.Meta.EventSignals
+﻿namespace Develop.Runtime.EventSignals
 {
     public interface ILaserSignalsHandler
     {

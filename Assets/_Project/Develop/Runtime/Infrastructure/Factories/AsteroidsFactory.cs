@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Develop.Runtime.Core.Spawn;
-using Develop.Runtime.Meta.EventSignals;
+using Develop.Runtime.EventSignals;
 using Develop.Runtime.Services.AssetManagement;
 using UnityEngine;
 using Zenject;
