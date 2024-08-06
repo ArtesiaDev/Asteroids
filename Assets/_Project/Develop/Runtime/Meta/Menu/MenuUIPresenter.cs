@@ -3,7 +3,7 @@ using Develop.Runtime.Infrastructure.GameStateMachine.States;
 using UnityEngine;
 using Zenject;
 
-namespace Develop.Runtime.Meta
+namespace Develop.Runtime.Meta.Menu
 {
     public class MenuUIPresenter
     {

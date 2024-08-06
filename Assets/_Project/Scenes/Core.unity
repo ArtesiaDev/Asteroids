@@ -350,6 +350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1394125865}
+  _coordinates: {fileID: 672240472}
+  _rotation: {fileID: 1532622130}
+  _velocity: {fileID: 1038035013}
+  _laserAmmunition: {fileID: 1646310460}
+  _laserCooldown: {fileID: 923163454}
 --- !u!1 &386791036
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +368,7 @@ GameObject:
   - component: {fileID: 386791041}
   - component: {fileID: 386791042}
   - component: {fileID: 386791043}
+  - component: {fileID: 386791044}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -387,6 +393,7 @@ MonoBehaviour:
   - {fileID: 386791041}
   - {fileID: 386791042}
   - {fileID: 386791043}
+  - {fileID: 386791044}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -444,7 +451,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _asteroidSpawner: {fileID: 8769074873233961762}
-  _score: {fileID: 1616862650}
 --- !u!114 &386791043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +463,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafc9e4fe71f4d6193867eeb94c0ea7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &386791044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386791036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466e0b7f541540ae91bcc79e17001d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statsPanelView: {fileID: 214811313}
+  _scoreView: {fileID: 1616862650}
+  _endPanelView: {fileID: 2094601268}
 --- !u!1 &407497176
 GameObject:
   m_ObjectHideFlags: 0
@@ -2644,10 +2665,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 386791039}
   - {fileID: 3004715110159939302}
   - {fileID: 1961982162}
   - {fileID: 407497180}
   - {fileID: 1874442982}
   - {fileID: 2160437961030258486}
-  - {fileID: 386791039}
   - {fileID: 8769074873233961761}

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using Zenject;
 
-namespace Develop.Runtime.Meta
+namespace Develop.Runtime.Meta.Menu
 {
     public class MenuUIView : MonoBehaviour
     {
