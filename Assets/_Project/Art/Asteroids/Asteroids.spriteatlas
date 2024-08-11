@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Asteroids
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 21300006, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300008, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300010, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300012, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300000, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300002, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300004, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300014, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300016, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300018, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300020, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300022, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300024, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300026, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300028, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300030, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300032, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    - {fileID: 21300034, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 1bd6c74c058d5f143a391104c445e845: 21300020
+    - 1bd6c74c058d5f143a391104c445e845: 21300022
+    - 1bd6c74c058d5f143a391104c445e845: 21300016
+    - 1bd6c74c058d5f143a391104c445e845: 21300018
+    - 1bd6c74c058d5f143a391104c445e845: 21300014
+    - 1bd6c74c058d5f143a391104c445e845: 21300004
+    - 1bd6c74c058d5f143a391104c445e845: 21300002
+    - 1bd6c74c058d5f143a391104c445e845: 21300000
+    - 1bd6c74c058d5f143a391104c445e845: 21300024
+    - 1bd6c74c058d5f143a391104c445e845: 21300028
+    - 1bd6c74c058d5f143a391104c445e845: 21300026
+    - 1bd6c74c058d5f143a391104c445e845: 21300032
+    - 1bd6c74c058d5f143a391104c445e845: 21300030
+    - 1bd6c74c058d5f143a391104c445e845: 21300034
+    - 1bd6c74c058d5f143a391104c445e845: 21300012
+    - 1bd6c74c058d5f143a391104c445e845: 21300008
+    - 1bd6c74c058d5f143a391104c445e845: 21300010
+    - 1bd6c74c058d5f143a391104c445e845: 21300006
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300020, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300022, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300016, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300018, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300014, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300004, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300002, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300000, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300024, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300028, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300026, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300032, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300030, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300034, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300012, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300008, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300010, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  - {fileID: 21300006, guid: 1bd6c74c058d5f143a391104c445e845, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - aster-med-4
+  - aster-med-5
+  - aster-med-2
+  - aster-med-3
+  - aster-med-1
+  - aster-huge-3
+  - aster-huge-2
+  - aster-huge-1
+  - aster-small-1
+  - aster-small-3
+  - aster-small-2
+  - aster-small-5
+  - aster-small-4
+  - aster-small-6
+  - aster-big-4
+  - aster-big-2
+  - aster-big-3
+  - aster-big-1
+  m_RenderDataMap: {}
+  m_Tag: Asteroids
+  m_IsVariant: 0
