@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4398792238808522713}
   - component: {fileID: 7839172433084085130}
   - component: {fileID: 6491417516067129211}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AsterSmall3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,5 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: f9c6a4f031085664cb2b65a68c05d549, type: 2}
-  _spawner: {fileID: 152492133089313575, guid: f1a1ee3855ac7e44dbf53815f9b8cd1e, type: 3}
   _type: 9

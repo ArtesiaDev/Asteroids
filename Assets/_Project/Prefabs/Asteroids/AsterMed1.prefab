@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7517419675092460398}
   - component: {fileID: 1400504349356359019}
   - component: {fileID: 8416811576959748173}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AsterMed1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,5 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: f9c6a4f031085664cb2b65a68c05d549, type: 2}
-  _spawner: {fileID: 152492133089313575, guid: f1a1ee3855ac7e44dbf53815f9b8cd1e, type: 3}
   _type: 4
