@@ -1,4 +1,4 @@
-﻿using Develop.Runtime.Meta.EventSignals;
+﻿using Develop.Runtime.EventSignals;
 using Zenject;
 
 namespace Develop.Runtime.Installers.CoreContext

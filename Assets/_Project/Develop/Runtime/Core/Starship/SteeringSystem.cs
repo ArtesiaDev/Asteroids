@@ -1,6 +1,6 @@
 ﻿using System;
 using Develop.Runtime.Core.Configs;
-using Develop.Runtime.Meta.EventSignals;
+using Develop.Runtime.EventSignals;
 using Develop.Runtime.Services.Input.InputActions;
 using UnityEngine;
 using Zenject;
