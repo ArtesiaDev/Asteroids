@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1086316711538",
+    "project_id": "asteroids-5c266",
+    "storage_bucket": "asteroids-5c266.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086316711538:android:7d347e4fb054c5581dbceb",
+        "android_client_info": {
+          "package_name": "com.Artesia.Asteroids"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHt_0iSOXe2RWdm2ghYhvDCaFaP0RyJOc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

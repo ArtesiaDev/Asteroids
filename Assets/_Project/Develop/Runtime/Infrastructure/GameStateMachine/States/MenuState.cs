@@ -1,4 +1,5 @@
-﻿using Develop.Runtime.Services.SceneLoader;
+﻿using Develop.Backend;
+using Develop.Runtime.Services.SceneLoader;
 using UnityEngine;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine.States
@@ -7,11 +8,13 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
     {
         private readonly IStateMachine _stateMachine;
         private readonly ISceneLoader _sceneLoader;
+        private readonly IAnalyticsService _analyticsService;
 
-        private MenuState(IStateMachine stateMachine, ISceneLoader sceneLoader)
+        private MenuState(IStateMachine stateMachine, ISceneLoader sceneLoader, IAnalyticsService analyticsService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
+            _analyticsService = analyticsService;
         }
         
         public async void Enter()
@@ -25,6 +28,7 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine.States
 
         private void OnLoaded()
         {
+            _analyticsService.LogGameStart();
         }
 
         public void Exit()
