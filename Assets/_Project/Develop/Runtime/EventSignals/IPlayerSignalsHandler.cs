@@ -5,5 +5,6 @@
         void OnPlayerDied(){}
         void OnPlayerMoved(){}
         void OnPlayerSteered(){}
+        void OnPlayerReincarnated();
     }
 }

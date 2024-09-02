@@ -18,5 +18,8 @@ namespace Develop.Runtime.Meta.Core
             _stringBuilder.AppendFormat("Score: {0}", newValue);
             _score.text = _stringBuilder.ToString();
         }
+
+        public void SwitchVisibility(bool condition) =>
+            gameObject.SetActive(condition);
     }
 }

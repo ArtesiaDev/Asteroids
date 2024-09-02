@@ -25,12 +25,14 @@ namespace Develop.Runtime.Meta.Core
         {
             _asteroidSignals.AsteroidDied += OnAsteroidDied;
             _playerSignals.PlayerDied += OnPlayerDied;
+            _playerSignals.PlayerReincarnated += OnPlayerReincarnated;
         }
 
         public void Dispose()
         {
             _asteroidSignals.AsteroidDied -= OnAsteroidDied;
             _playerSignals.PlayerDied -= OnPlayerDied;
+            _playerSignals.PlayerReincarnated -= OnPlayerReincarnated;
         }
 
         private void OnAsteroidDied()
@@ -40,6 +42,9 @@ namespace Develop.Runtime.Meta.Core
         }
 
         private void OnPlayerDied() =>
-            _view.gameObject.SetActive(false);
+            _view.SwitchVisibility(false);
+
+        private void OnPlayerReincarnated() =>
+            _view.SwitchVisibility(true);
     }
 }
