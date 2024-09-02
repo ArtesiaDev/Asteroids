@@ -2,12 +2,15 @@
 {
     public abstract class Input: IInput
     {
-        public virtual bool Move { get; }
+        private const string HORIZONTAL = "Horizontal";
+
+        public float Steer =>
+            SimpleInput.GetAxis(HORIZONTAL);
+
+        public abstract bool Move { get; }
+
+        public abstract bool BulletShoot { get; }
         
-        public virtual float Steer { get; }
-        
-        public virtual bool BulletShoot { get; }
-        
-        public virtual bool LaserShoot { get; }
+        public abstract bool LaserShoot { get; }
     }
 }
