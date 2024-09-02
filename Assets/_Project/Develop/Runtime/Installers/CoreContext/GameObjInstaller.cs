@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Develop.Runtime.Installers.CoreContext
 {
-    public sealed class MonobehInstaller : MonoInstaller
+    public sealed class GameObjInstaller : MonoInstaller
     {
         [SerializeField] private AsteroidSpawner _asteroidSpawner; 
         [SerializeField] private PlayerSpawner _playerSpawner;

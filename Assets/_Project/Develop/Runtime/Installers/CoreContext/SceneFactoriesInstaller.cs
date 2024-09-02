@@ -10,6 +10,7 @@ namespace Develop.Runtime.Installers.CoreContext
             Container.Bind<AsteroidsFactory>().AsSingle().NonLazy();
             Container.Bind<LaserFactory>().AsSingle().NonLazy(); 
             Container.Bind<BulletFactory>().AsSingle().NonLazy(); 
+            Container.Bind<PlayerFactory>().AsSingle().NonLazy();
         }
     }
 }

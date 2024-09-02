@@ -14,7 +14,6 @@ namespace Develop.Runtime.Core.Spawn
     public class AsteroidSpawner : Spawner
     {
         [SerializeField] private EnemyConfig _config;
-        [SerializeField] private Starship.Starship _starship;
 
         private Dictionary<AsteroidTypes, string> _asteroids;
         private AsteroidsFactory _factory;
@@ -22,8 +21,10 @@ namespace Develop.Runtime.Core.Spawn
         private CancellationTokenSource _cancellationTokenSource;
 
         [Inject]
-        private void Construct(AsteroidsFactory factory) =>
+        private void Construct(AsteroidsFactory factory)
+        {
             _factory = factory;
+        }
 
         public async Task <Asteroid> CreateAsteroid(AsteroidTypes aster, Vector2 spawnPosition) => 
             await _factory.Create(_asteroids[aster], spawnPosition, Quaternion.identity);
@@ -49,7 +50,7 @@ namespace Develop.Runtime.Core.Spawn
 
         private async void Start()
         {
-            while (_starship != null)
+            while (gameObject!= null)
             {
                 SpawnMeteor();
                try

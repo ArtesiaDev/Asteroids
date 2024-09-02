@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Develop.Runtime.Core.Starship
 {
-    public class SteeringSystem : IFixedTickable, IDisposable
+    public class SteeringSystem : IFixedTickable, IInitializable, IDisposable
     {
         public event Action PlayerSteered;
 
@@ -24,8 +24,10 @@ namespace Develop.Runtime.Core.Starship
             _input = input;
             _transform = transform;
             _playerSignalsHandler = playerSignalsHandler;
-            PlayerSteered += _playerSignalsHandler.OnPlayerSteered;
         }
+
+        public void Initialize() =>
+            PlayerSteered += _playerSignalsHandler.OnPlayerSteered;
 
         public void Dispose() =>
             PlayerSteered -= _playerSignalsHandler.OnPlayerSteered;
