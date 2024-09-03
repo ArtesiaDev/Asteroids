@@ -1,10 +1,17 @@
 ﻿using System;
+using Develop.Backend.Analytics;
 using Zenject;
 
 namespace Develop.Backend.Ads
 {
     public class BannerCallbacks: IInitializable, IDisposable
     {
+        private IAdsAnalytics _analytics;
+
+        [Inject]
+        private void Construct(IAdsAnalytics analytics) =>
+            _analytics = analytics;
+        
         public void Initialize()
         {
             IronSourceBannerEvents.onAdLoadedEvent += BannerOnAdLoadedEvent;
@@ -28,6 +35,7 @@ namespace Develop.Backend.Ads
         //Invoked once the banner has loaded
         private void BannerOnAdLoadedEvent(IronSourceAdInfo adInfo)
         {
+            _analytics.LogBannerLoaded(adInfo);
         }
 
         //Invoked when the banner loading process has failed.
@@ -38,6 +46,7 @@ namespace Develop.Backend.Ads
         // Invoked when end user clicks on the banner ad
         private void BannerOnAdClickedEvent(IronSourceAdInfo adInfo)
         {
+            _analytics.LogBannerClicked(adInfo);
         }
 
         //Notifies the presentation of a full screen content following user click

@@ -1,10 +1,17 @@
 using System;
+using Develop.Backend.Analytics;
 using Zenject;
 
 namespace Develop.Backend.Ads
 {
     public class RewardedCallbacks : IInitializable, IDisposable
     {
+        private IAdsAnalytics _analytics;
+
+        [Inject]
+        private void Construct(IAdsAnalytics analytics) =>
+            _analytics = analytics;
+
         public void Initialize()
         {
             IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
@@ -55,6 +62,7 @@ namespace Develop.Backend.Ads
         // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
         private void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
         {
+            _analytics.LogRewardedVideoStarted(adInfo);
         }
 
         // The rewarded video ad was failed to show.
@@ -67,6 +75,7 @@ namespace Develop.Backend.Ads
         // it’s supported by all networks you included in your build.
         private void RewardedVideoOnAdClickedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
         {
+            _analytics.LogRewardedVideoClicked(adInfo);
         }
     }
 }
