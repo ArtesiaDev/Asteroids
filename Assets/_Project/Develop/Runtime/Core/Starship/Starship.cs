@@ -13,7 +13,7 @@ namespace Develop.Runtime.Core.Starship
     public class Starship : MonoBehaviour
     {
         public event Action PlayerDied;
-        
+
         [SerializeField] private PlayerConfig _config;
 
         private Rigidbody2D _rb;
@@ -27,16 +27,19 @@ namespace Develop.Runtime.Core.Starship
         private IInput _input;
         private IPlayerSignalsHandler _playerSignalsHandler;
         private ILaserSignalsHandler _laserSignalsHandler;
+        private IBulletSignalsHandler _bulletSignalsHandler;
 
         [Inject]
         private void Construct(BulletFactory bulletFactory, LaserFactory laserFactory, IInput input,
-            IPlayerSignalsHandler playerSignalsHandler, ILaserSignalsHandler laserSignalsHandler)
+            IPlayerSignalsHandler playerSignalsHandler, ILaserSignalsHandler laserSignalsHandler,
+            IBulletSignalsHandler bulletSignalsHandler)
         {
             _bulletFactory = bulletFactory;
             _laserFactory = laserFactory;
             _input = input;
             _playerSignalsHandler = playerSignalsHandler;
             _laserSignalsHandler = laserSignalsHandler;
+            _bulletSignalsHandler = bulletSignalsHandler;
         }
 
         private void Awake()
@@ -45,7 +48,7 @@ namespace Develop.Runtime.Core.Starship
             _moverSystem = new MoverSystem(_config, _input, _rb, transform, _playerSignalsHandler);
             _steeringSystem = new SteeringSystem(_config, _input, transform, _playerSignalsHandler);
             _teleportationSystem = new TeleportationSystem(transform);
-            _bulletShooting = new BulletShooting(_config, _input, transform, _bulletFactory);
+            _bulletShooting = new BulletShooting(_config, _input, transform, _bulletFactory, _bulletSignalsHandler);
             _laserShooting = new LaserShooting(_config, _input, _laserFactory, this, _laserSignalsHandler);
         }
 
@@ -75,9 +78,9 @@ namespace Develop.Runtime.Core.Starship
 
         private void OnDisable()
         {
-             PlayerDied -= _playerSignalsHandler.OnPlayerDied;
-             _moverSystem.Dispose();
-             _steeringSystem.Dispose();
+            PlayerDied -= _playerSignalsHandler.OnPlayerDied;
+            _moverSystem.Dispose();
+            _steeringSystem.Dispose();
             _bulletShooting.Dispose();
             _laserShooting.Dispose();
         }

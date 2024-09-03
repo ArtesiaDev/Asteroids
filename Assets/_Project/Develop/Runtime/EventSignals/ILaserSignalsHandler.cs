@@ -2,7 +2,8 @@
 {
     public interface ILaserSignalsHandler
     {
-        void OnLaserAmmunitionChanged(int currentLaserShots){}
-        void OnLaserCooldownChanged(float cooldown){}
+        void OnLaserAmmunitionChanged(int currentLaserShots);
+        void OnLaserCooldownChanged(float cooldown);
+        void OnLaserShot();
     }
 }

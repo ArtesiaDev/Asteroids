@@ -9,11 +9,11 @@ namespace Develop.Runtime.Meta.Core
         private IPlayerSignals _playerSignals;
         private IAsteroidSignals _asteroidSignals;
         private ScoreView _view;
-        private CoreUIModel _model;
+        private CoreModel _model;
 
         [Inject]
         private void Construct(IPlayerSignals playerSignals, IAsteroidSignals asteroidSignals, ScoreView view,
-            CoreUIModel model)
+            CoreModel model)
         {
             _playerSignals = playerSignals;
             _asteroidSignals = asteroidSignals;

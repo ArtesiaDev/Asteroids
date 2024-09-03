@@ -7,5 +7,6 @@ namespace Develop.Runtime.EventSignals
     {
         Observable<int> LaserAmmunition { get; }
         Observable<float> LaserCooldown { get; }
+        event Action LaserShot;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Develop.Runtime.Infrastructure.GameStateMachine;
+﻿using Develop.Backend.Analytics;
+using Develop.Runtime.Infrastructure.GameStateMachine;
 using Develop.Runtime.Infrastructure.GameStateMachine.States;
 using UnityEngine;
 using Zenject;
@@ -8,17 +9,22 @@ namespace Develop.Runtime.Meta.Menu
     public class MenuUIPresenter
     {
         private IStateMachine _stateMachine;
+        private IGamePlayAnalytics _analytics;
         private MenuUIView _view;
         
         [Inject]
-        private void Construct(IStateMachine stateMachine, MenuUIView view)
+        private void Construct(IStateMachine stateMachine, MenuUIView view, IGamePlayAnalytics analytics)
         {
             _stateMachine = stateMachine;
             _view = view;
+            _analytics = analytics;
         }
         
-        public void StartGame() =>
+        public void StartGame()
+        {
             _stateMachine.Enter<LoadLevelState>();
+            _analytics.LogGameStarted();
+        }
 
         public void OpenSettings() =>
             _view.SwitchPanelsRendering(false, true);

@@ -16,6 +16,7 @@ namespace Develop.Runtime.Installers.ProjectContext
             Container.BindInterfacesTo<RewardedCallbacks>().AsSingle();
             
             Container.BindInterfacesTo<GameAnalyticsAds>().AsSingle();
+            Container.BindInterfacesTo<GameAnalyticsGamePlay>().AsSingle();
         }
     }
 }
