@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Develop.Backend.Ads;
 using Develop.Runtime.Infrastructure.Factories;
 using Develop.Runtime.Infrastructure.GameStateMachine.States;
 using UnityEngine.SceneManagement;
@@ -14,11 +15,12 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine
         private Dictionary<Type, IState> _states;
         private IState _currentState;
         private readonly StateFactory _factory;
-
-        public GameStateMachine(StateFactory factory)
-        {
+        private readonly IronSourceAdsInitialize _ads;
+        public GameStateMachine(StateFactory factory, IronSourceAdsInitialize ads)
+         {
             _factory = factory;
-        }
+            _ads = ads;
+         }
 
         public void Initialize()
         {
@@ -28,6 +30,7 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine
                 [typeof(LoadLevelState)] = _factory.Create<LoadLevelState>(),
                 [typeof(CoreState)] = _factory.Create<CoreState>(),
             };
+            _ads.Initialize();
             EnterStartState();
         }
 

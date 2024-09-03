@@ -52,6 +52,8 @@ namespace Develop.Runtime.Core.Starship
         private void OnEnable()
         {
             PlayerDied += _playerSignalsHandler.OnPlayerDied;
+            _moverSystem.Initialize();
+            _steeringSystem.Initialize();
             _bulletShooting.Initialize();
             _laserShooting.Initialize();
         }

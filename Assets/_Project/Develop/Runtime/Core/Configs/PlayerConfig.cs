@@ -25,15 +25,22 @@ namespace Develop.Runtime.Core.Configs
 
         [field: SerializeField] public float Speed { get; private set; }
 
-        [field: Header("Player")]
+        [field: Header("LaserShooting")]
         [field: SerializeField]
         public float Cooldown { get; private set; }
 
         [field: SerializeField, Range(0.8f, 10f)]
         public float LaserOffsetCoefficient { get; private set; }
+
         [field: SerializeField] public int Ammunition { get; private set; }
-        
+
         [field: SerializeField] public float LaserLifeTime { get; private set; }
         [field: SerializeField] public float ReloadTime { get; private set; }
+
+        [field: Header("Spawn")]
+        [field: SerializeField]
+        public Vector2 SpawnPoint { get; private set; }
+
+        [field: SerializeField] public float ClearRadius { get; private set; }
     }
 }

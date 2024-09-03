@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Develop.Runtime.Core.Starship
 {
-    public class MoverSystem : IFixedTickable, IDisposable
+    public class MoverSystem : IFixedTickable, IInitializable, IDisposable
     {
         public event Action PlayerMoved;
 
@@ -25,8 +25,10 @@ namespace Develop.Runtime.Core.Starship
             _rb = rb;
             _transform = transform;
             _playerSignalsHandler = playerSignalsHandler;
-            PlayerMoved += _playerSignalsHandler.OnPlayerMoved;
         }
+
+        public void Initialize() =>
+            PlayerMoved += _playerSignalsHandler.OnPlayerMoved;
 
         public void Dispose() =>
             PlayerMoved -= _playerSignalsHandler.OnPlayerMoved;

@@ -7,5 +7,6 @@ namespace Develop.Runtime.EventSignals
         event Action PlayerSteered;
         event Action PlayerDied;
         event Action PlayerMoved;
+        event Action PlayerReincarnated;
     }
 }

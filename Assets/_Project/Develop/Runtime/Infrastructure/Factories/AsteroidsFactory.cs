@@ -30,8 +30,11 @@ namespace Develop.Runtime.Infrastructure.Factories
                 await Prepare(prefab.Value);
         }
 
-        public void CreateRoot() =>
-            _parent = new GameObject("[Asteroids]").transform;
+        public void CreateRoot()
+        {
+            if (_parent == null)
+                _parent = new GameObject("[Asteroids]").transform;
+        }
 
         public async Task<Asteroid> Create(string prefabKey, Vector2 position, Quaternion rotation)
         {

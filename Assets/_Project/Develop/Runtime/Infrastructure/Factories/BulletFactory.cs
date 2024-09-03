@@ -18,19 +18,22 @@ namespace Develop.Runtime.Infrastructure.Factories
             _container = container;
             _assetProvider = assetProvider;
         }
-        
+
         public async Task Prepare() =>
             await _assetProvider.Load<GameObject>(key: BULLET);
 
-        public void CreateRoot() =>
-            _parent = new GameObject("[Bullets]").transform;
-    
+        public void CreateRoot()
+        {
+            if (_parent == null)
+                _parent = new GameObject("[Bullets]").transform;
+        }
+
         public async Task<Bullet> Create(Vector3 position, Quaternion rotation)
         {
             var prefab = await _assetProvider.Load<GameObject>(key: BULLET);
             return _container.InstantiatePrefabForComponent<Bullet>(prefab, position, rotation, _parent);
         }
-        
+
         public void Clear() =>
             _assetProvider.Release(key: BULLET);
     }

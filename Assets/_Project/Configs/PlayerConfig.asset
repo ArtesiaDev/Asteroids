@@ -23,3 +23,5 @@ MonoBehaviour:
   <Ammunition>k__BackingField: 2
   <LaserLifeTime>k__BackingField: 0.1
   <ReloadTime>k__BackingField: 10
+  <SpawnPoint>k__BackingField: {x: 0, y: 0}
+  <ClearRadius>k__BackingField: 1

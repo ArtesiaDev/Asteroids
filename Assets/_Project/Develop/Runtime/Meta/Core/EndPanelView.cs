@@ -9,6 +9,7 @@ namespace Develop.Runtime.Meta.Core
     {
         [SerializeField] private Button _retryButton;
         [SerializeField] private Button _menuButton;
+        [SerializeField] private Button _rewardedButton;
         [SerializeField] private GameObject _statsPanel;
         [SerializeField] private GameObject _endPanelView;
         [SerializeField] private TextMeshProUGUI _finalScore;
@@ -22,22 +23,24 @@ namespace Develop.Runtime.Meta.Core
         public void RenderFinalScore(int newValue) =>
             _finalScore.text = $"Score: {newValue}";
 
-        public void SwitchPanelsRendering()
+        public void SwitchPanelsRendering( bool statsPanel, bool endPanel)
         {
-            _statsPanel.SetActive(false);
-            _endPanelView.SetActive(true);
+            _statsPanel.SetActive(statsPanel);
+            _endPanelView.SetActive(endPanel);
         }
 
         private void OnEnable()
         {
             _retryButton.onClick.AddListener(_presenter.ReloadGame);
             _menuButton.onClick.AddListener(_presenter.ToMenu);
+            _rewardedButton.onClick.AddListener(_presenter.StartRewardedVideo);
         }
 
         private void OnDisable()
         {
             _retryButton.onClick.RemoveAllListeners();
             _menuButton.onClick.RemoveAllListeners();
+            _rewardedButton.onClick.RemoveAllListeners();
         }
     }
 }

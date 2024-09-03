@@ -6,10 +6,11 @@
     <type fullname="Develop.Runtime.Core.ShootingObjects.Laser" preserve="all" />
     <type fullname="Develop.Runtime.Core.Spawn.Asteroid" preserve="all" />
     <type fullname="Develop.Runtime.Core.Spawn.AsteroidSpawner" preserve="all" />
+    <type fullname="Develop.Runtime.Core.Spawn.PlayerSpawner" preserve="all" />
     <type fullname="Develop.Runtime.Core.Starship.Starship" preserve="all" />
     <type fullname="Develop.Runtime.Installers.CoreContext.CoreUIInstaller" preserve="all" />
     <type fullname="Develop.Runtime.Installers.CoreContext.EventSignalsInstaller" preserve="all" />
-    <type fullname="Develop.Runtime.Installers.CoreContext.MonobehInstaller" preserve="all" />
+    <type fullname="Develop.Runtime.Installers.CoreContext.GameObjInstaller" preserve="all" />
     <type fullname="Develop.Runtime.Installers.CoreContext.SceneFactoriesInstaller" preserve="all" />
     <type fullname="Develop.Runtime.Installers.MenuContext.UIInstaller" preserve="all" />
     <type fullname="Develop.Runtime.Meta.Core.EndPanelView" preserve="all" />
@@ -17,6 +18,12 @@
     <type fullname="Develop.Runtime.Meta.Core.StatsPanelView" preserve="all" />
     <type fullname="Develop.Runtime.Meta.Menu.MenuUIView" preserve="all" />
     <type fullname="Develop.Runtime.Services.AudioSystem.AudioSystem" preserve="all" />
+  </assembly>
+  <assembly fullname="SimpleInput.Runtime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="SimpleInputNamespace.AxisInputUIArrows" preserve="all" />
+    <type fullname="SimpleInputNamespace.ButtonInputUI" preserve="all" />
+    <type fullname="SimpleInput/AxisInput" preserve="nothing" serialized="true" />
+    <type fullname="SimpleInput/ButtonInput" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
     <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
@@ -80,6 +87,7 @@
   <assembly fullname="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.EventSystems.EventSystem" preserve="all" />
     <type fullname="UnityEngine.EventSystems.StandaloneInputModule" preserve="all" />
+    <type fullname="UnityEngine.UI.AspectRatioFitter" preserve="all" />
     <type fullname="UnityEngine.UI.Button" preserve="all" />
     <type fullname="UnityEngine.UI.CanvasScaler" preserve="all" />
     <type fullname="UnityEngine.UI.GraphicRaycaster" preserve="all" />

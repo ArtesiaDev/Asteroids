@@ -7,6 +7,7 @@ namespace Develop.Runtime.EventSignals
         public event Action PlayerDied;
         public event Action PlayerMoved;
         public event Action PlayerSteered;
+        public event Action PlayerReincarnated;
 
         public void OnPlayerDied() =>
             PlayerDied?.Invoke();
@@ -16,5 +17,8 @@ namespace Develop.Runtime.EventSignals
 
         public void OnPlayerSteered() =>
             PlayerSteered?.Invoke();
+
+        public void OnPlayerReincarnated() =>
+            PlayerReincarnated?.Invoke();
     }
 }
