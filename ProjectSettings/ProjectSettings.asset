@@ -793,7 +793,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: LEVELPLAY_DEPENDENCIES_INSTALLED
+    Android: LEVELPLAY_DEPENDENCIES_INSTALLED;gameanalytics_ironsource_enabled
+    iPhone: gameanalytics_ironsource_enabled
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
