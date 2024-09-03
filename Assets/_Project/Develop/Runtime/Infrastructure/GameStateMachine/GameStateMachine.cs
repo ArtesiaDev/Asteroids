@@ -10,19 +10,22 @@ using Scene = Develop.Runtime.Services.SceneLoader.Scene;
 
 namespace Develop.Runtime.Infrastructure.GameStateMachine
 {
-    public sealed class GameStateMachine : IInitializable, IStateMachine
+    public sealed class GameStateMachine : IInitializable, IDisposable, IStateMachine
     {
         private Dictionary<Type, IState> _states;
         private IState _currentState;
         private readonly StateFactory _factory;
         private readonly IronSourceAdsInitialize _ads;
-        public GameStateMachine(StateFactory factory, IronSourceAdsInitialize ads)
-         {
+        private readonly GameAnalyticsFactory _gameAnalytics;
+
+        public GameStateMachine(StateFactory factory, IronSourceAdsInitialize ads, GameAnalyticsFactory gameAnalytics)
+        {
             _factory = factory;
             _ads = ads;
-         }
+            _gameAnalytics = gameAnalytics;
+        }
 
-        public void Initialize()
+        public async void Initialize()
         {
             _states = new Dictionary<Type, IState>()
             {
@@ -32,23 +35,11 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine
             };
             _ads.Initialize();
             EnterStartState();
+            await _gameAnalytics.Create();
         }
 
-        private void EnterStartState()
-        {
-            var scene = SceneManager.GetActiveScene().name;
-            
-            if (Enum.TryParse(scene, out Scene currentSceneEnum))
-            {
-                switch (currentSceneEnum)
-                {
-                    case Scene.Menu: Enter<MenuState>(); break;
-                    case Scene.Loading: EditorDebugEnter<LoadLevelState>(); break;
-                    case Scene.Core: EditorDebugEnter<CoreState>(); break;
-                }
-            }
-            else throw new InvalidEnumArgumentException();
-        }
+        public void Dispose() =>
+            _gameAnalytics.Clear();
 
         public void Enter<T>() where T : IState
         {
@@ -61,6 +52,28 @@ namespace Develop.Runtime.Infrastructure.GameStateMachine
         {
             _currentState = _states[typeof(T)];
             _currentState.EditorDebugEnter();
+        }
+
+        private void EnterStartState()
+        {
+            var scene = SceneManager.GetActiveScene().name;
+
+            if (Enum.TryParse(scene, out Scene currentSceneEnum))
+            {
+                switch (currentSceneEnum)
+                {
+                    case Scene.Menu:
+                        Enter<MenuState>();
+                        break;
+                    case Scene.Loading:
+                        EditorDebugEnter<LoadLevelState>();
+                        break;
+                    case Scene.Core:
+                        EditorDebugEnter<CoreState>();
+                        break;
+                }
+            }
+            else throw new InvalidEnumArgumentException();
         }
     }
 }

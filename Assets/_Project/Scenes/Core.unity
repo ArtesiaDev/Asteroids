@@ -1361,7 +1361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114456987316669482, guid: 3066c3a8fcfd6fc4482868bf62045594, type: 3}
       propertyPath: deadzoneRadius
-      value: 65
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 114456987316669482, guid: 3066c3a8fcfd6fc4482868bf62045594, type: 3}
       propertyPath: valueMultiplier
@@ -1401,7 +1401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224047778984712946, guid: 3066c3a8fcfd6fc4482868bf62045594, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 330.83
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 224047778984712946, guid: 3066c3a8fcfd6fc4482868bf62045594, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2437,7 +2437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -559.9999, y: -419}
+  m_AnchoredPosition: {x: -559.9999, y: -395}
   m_SizeDelta: {x: 90, y: 110}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1557011703
