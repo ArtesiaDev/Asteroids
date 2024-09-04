@@ -14,8 +14,7 @@ namespace Develop.Runtime.Core.Starship
     {
         public event Action PlayerDied;
 
-        [SerializeField] private PlayerConfig _config;
-
+        private PlayerConfig _config;
         private Rigidbody2D _rb;
         private MoverSystem _moverSystem;
         private SteeringSystem _steeringSystem;
@@ -30,10 +29,11 @@ namespace Develop.Runtime.Core.Starship
         private IBulletSignalsHandler _bulletSignalsHandler;
 
         [Inject]
-        private void Construct(BulletFactory bulletFactory, LaserFactory laserFactory, IInput input,
+        private void Construct(PlayerConfig config,BulletFactory bulletFactory, LaserFactory laserFactory, IInput input,
             IPlayerSignalsHandler playerSignalsHandler, ILaserSignalsHandler laserSignalsHandler,
             IBulletSignalsHandler bulletSignalsHandler)
         {
+            _config = config;
             _bulletFactory = bulletFactory;
             _laserFactory = laserFactory;
             _input = input;

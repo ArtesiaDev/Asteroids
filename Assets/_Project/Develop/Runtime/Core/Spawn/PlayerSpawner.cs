@@ -7,12 +7,13 @@ namespace Develop.Runtime.Core.Spawn
 {
     public class PlayerSpawner : MonoBehaviour
     {
-        [SerializeField] private PlayerConfig _config;
+        private IPlayerSpawnConfig _config;
         private PlayerFactory _factory;
 
         [Inject]
-        private void Construct(PlayerFactory factory)
+        private void Construct(IPlayerSpawnConfig config, PlayerFactory factory)
         {
+            _config = config;
             _factory = factory;
         }
 
@@ -32,7 +33,7 @@ namespace Develop.Runtime.Core.Spawn
 
         public async void SpawnPlayer()
         {
-            ClearPosition(_config.SpawnPoint, _config.ClearRadius);
+            ClearPosition(_config.SpawnPoint, _config.SpawnClearRadius);
             PlayerPrefab = (await _factory.Create(_config.SpawnPoint, Quaternion.identity)).gameObject;
             PlayerRb = PlayerPrefab.GetComponent<Rigidbody2D>();
         }

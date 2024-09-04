@@ -2,7 +2,6 @@
   <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="Develop.Backend.Analytics.GameAnalyticsInitialize" preserve="all" />
     <type fullname="Develop.Runtime.Core.Configs.EnemyConfig" preserve="all" />
-    <type fullname="Develop.Runtime.Core.Configs.PlayerConfig" preserve="all" />
     <type fullname="Develop.Runtime.Core.ShootingObjects.Bullet" preserve="all" />
     <type fullname="Develop.Runtime.Core.ShootingObjects.Laser" preserve="all" />
     <type fullname="Develop.Runtime.Core.Spawn.Asteroid" preserve="all" />

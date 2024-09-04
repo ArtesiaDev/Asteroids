@@ -42,7 +42,7 @@ namespace Develop.Runtime.Core.Starship
                 .AddTo(_disposable);
             _laserCooldown.Subscribe(value => _laserSignalsHandler.OnLaserCooldownChanged(value)).AddTo(_disposable);
             LaserShot += _laserSignalsHandler.OnLaserShot;
-            _laserAmmunition.Value = _config.Ammunition;
+            _laserAmmunition.Value = _config.LaserAmmunition;
             await _laserFactory.Prepare();
             await Reload();
         }
@@ -83,7 +83,7 @@ namespace Develop.Runtime.Core.Starship
             {
                 try
                 {
-                    await UniTask.Delay(TimeSpan.FromSeconds(_config.ReloadTime), DelayType.DeltaTime,
+                    await UniTask.Delay(TimeSpan.FromSeconds(_config.LaserReloadTime), DelayType.DeltaTime,
                         PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
                 }
                 catch
@@ -97,11 +97,11 @@ namespace Develop.Runtime.Core.Starship
 
         private async UniTask Cooldown()
         {
-            _laserCooldown.Value = _config.Cooldown;
+            _laserCooldown.Value = _config.LaserCooldown;
 
             try
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(_config.Cooldown), DelayType.DeltaTime,
+                await UniTask.Delay(TimeSpan.FromSeconds(_config.LaserCooldown), DelayType.DeltaTime,
                     PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
             }
             catch

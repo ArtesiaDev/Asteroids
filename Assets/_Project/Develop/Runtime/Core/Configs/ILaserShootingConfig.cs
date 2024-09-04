@@ -2,10 +2,10 @@ namespace Develop.Runtime.Core.Configs
 {
     public interface ILaserShootingConfig
     {
-        public float Cooldown { get; }
+        public float LaserCooldown { get; }
         public float LaserOffsetCoefficient { get; }
-        public int Ammunition { get; }
+        public int LaserAmmunition { get; }
         public float LaserLifeTime { get; }
-        public float ReloadTime { get; }
+        public float LaserReloadTime { get; }
     }
 }

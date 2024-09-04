@@ -62,7 +62,7 @@ namespace Develop.Runtime.Core.Starship
         }
 
         private void UpdateNextFireTime()
-            => _nextFireTime = Time.time + _config.FireRate;
+            => _nextFireTime = Time.time + _config.BulletFireRate;
 
         private async Task<Bullet> CreateBullet()
         {
@@ -72,7 +72,7 @@ namespace Develop.Runtime.Core.Starship
 
         private void ShootBullet(Bullet bullet)
         {
-            Vector2 thrust = _transform.up * _config.Speed;
+            Vector2 thrust = _transform.up * _config.BulletSpeed;
             bullet.Shoot(thrust, ForceMode2D.Impulse);
         }
     }
