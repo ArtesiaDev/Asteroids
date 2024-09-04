@@ -44,26 +44,25 @@ namespace Develop.Runtime.Core.Configs
             if (jsonConfig == null) return;
 
             var config = JObject.Parse(jsonConfig);
+            
+            SteeringSpeed = config.Value<int>(nameof(SteeringSpeed));
 
-            SteeringSpeed = (float)config[nameof(SteeringSpeed)];
+            MoveThrustPower = config.Value<int>(nameof(MoveThrustPower));
+            MaxSpeed = config.Value<int>(nameof(MaxSpeed));
 
-            MoveThrustPower = (float)config[nameof(MoveThrustPower)];
-            MaxSpeed = (float)config[nameof(MaxSpeed)];
+            BulletFireRate = config.Value<int>(nameof(BulletFireRate));
+            BulletOffsetCoefficient = config.Value<int>(nameof(BulletOffsetCoefficient));
+            BulletSpeed = config.Value<int>(nameof(BulletSpeed));
 
-            BulletFireRate = (float)config[nameof(BulletFireRate)];
-            BulletFireRate = (float)config[nameof(BulletFireRate)];
-            BulletOffsetCoefficient = (float)config[nameof(BulletOffsetCoefficient)];
-            BulletSpeed = (float)config[nameof(BulletSpeed)];
+            LaserCooldown = config.Value<int>(nameof(LaserCooldown));
+            LaserOffsetCoefficient = config.Value<int>(nameof(LaserOffsetCoefficient));
+            LaserAmmunition = config.Value<int>(nameof(LaserAmmunition));
+            LaserLifeTime = config.Value<int>(nameof(LaserLifeTime));
+            LaserReloadTime = config.Value<int>(nameof(LaserReloadTime));
 
-            LaserCooldown = (float)config[nameof(LaserCooldown)];
-            LaserOffsetCoefficient = (float)config[nameof(LaserOffsetCoefficient)];
-            LaserAmmunition = (int)config[nameof(LaserAmmunition)];
-            LaserLifeTime = (float)config[nameof(LaserLifeTime)];
-            LaserReloadTime = (float)config[nameof(LaserReloadTime)];
-
-            SpawnPoint = new Vector2((float)config[nameof(SpawnPoint)]?[nameof(Vector2.x)],
-                (float)config[nameof(SpawnPoint)]?[nameof(Vector2.y)]);
-            SpawnClearRadius = (float)config[nameof(SpawnPoint)];
+            SpawnPoint = new Vector2(config.Value<float>($"{nameof(SpawnPoint)}.x"),
+                config.Value<float>($"{nameof(SpawnPoint)}.y"));
+            SpawnClearRadius = config.Value<int>(nameof(SpawnClearRadius));
         }
     }
 }
