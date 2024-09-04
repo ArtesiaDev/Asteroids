@@ -10,6 +10,7 @@ namespace Develop.Runtime.Installers.CoreContext
             Container.BindInterfacesTo<PlayerSignals>().AsSingle().NonLazy();
             Container.BindInterfacesTo<AsteroidSignals>().AsSingle().NonLazy();
             Container.BindInterfacesTo<LaserSignals>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<BulletSignals>().AsSingle().NonLazy();
         }
     }
 }

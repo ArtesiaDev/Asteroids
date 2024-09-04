@@ -13,12 +13,33 @@ namespace Develop.Runtime.Meta.Core
         [SerializeField] private GameObject _statsPanel;
         [SerializeField] private GameObject _endPanelView;
         [SerializeField] private TextMeshProUGUI _finalScore;
+        [SerializeField] private TextMeshProUGUI _adsBanMessage;
 
-        private EndPanelPresenter _presenter;
+        private EndPanelPresenter _endPanelPresenter;
+        private CoreBackendPresenter _backendPresenter;
 
         [Inject]
-        private void Construct(EndPanelPresenter presenter) =>
-            _presenter = presenter;
+        private void Construct(EndPanelPresenter endPanelPresenter, CoreBackendPresenter backendPresenter)
+        {
+            _endPanelPresenter = endPanelPresenter;
+            _backendPresenter = backendPresenter;
+        }
+
+        private void OnEnable()
+        {
+            _retryButton.onClick.AddListener(_endPanelPresenter.ReloadGame);
+            _retryButton.onClick.AddListener(_backendPresenter.ReloadGameBackend);
+            _menuButton.onClick.AddListener(_endPanelPresenter.ToMenu);
+            _menuButton.onClick.AddListener(_backendPresenter.ToMenuBackend);
+            _rewardedButton.onClick.AddListener(_backendPresenter.StartRewardedVideo);
+        }
+
+        private void OnDisable()
+        {
+            _retryButton.onClick.RemoveAllListeners();
+            _menuButton.onClick.RemoveAllListeners();
+            _rewardedButton.onClick.RemoveAllListeners();
+        }
 
         public void RenderFinalScore(int newValue) =>
             _finalScore.text = $"Score: {newValue}";
@@ -29,18 +50,10 @@ namespace Develop.Runtime.Meta.Core
             _endPanelView.SetActive(endPanel);
         }
 
-        private void OnEnable()
+        public void ShowAdsBanMessage()
         {
-            _retryButton.onClick.AddListener(_presenter.ReloadGame);
-            _menuButton.onClick.AddListener(_presenter.ToMenu);
-            _rewardedButton.onClick.AddListener(_presenter.StartRewardedVideo);
-        }
-
-        private void OnDisable()
-        {
-            _retryButton.onClick.RemoveAllListeners();
-            _menuButton.onClick.RemoveAllListeners();
-            _rewardedButton.onClick.RemoveAllListeners();
+            _rewardedButton.gameObject.SetActive(false);
+            _adsBanMessage.gameObject.SetActive(true);
         }
     }
 }

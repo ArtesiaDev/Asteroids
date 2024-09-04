@@ -11,6 +11,7 @@ namespace Develop.Runtime.Installers.ProjectContext
         private void BindFactories()
         {
             Container.Bind<StateFactory>().AsSingle().NonLazy();
+            Container.Bind<GameAnalyticsFactory>().AsSingle().NonLazy();
         }
     }
 }

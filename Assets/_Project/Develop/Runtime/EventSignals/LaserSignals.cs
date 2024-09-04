@@ -1,4 +1,5 @@
-﻿using R3;
+﻿using System;
+using R3;
 
 namespace Develop.Runtime.EventSignals
 {
@@ -10,10 +11,15 @@ namespace Develop.Runtime.EventSignals
         public Observable<float> LaserCooldown => _laserCooldown;
         private readonly ReactiveProperty<float> _laserCooldown = new ReactiveProperty<float>();
 
+        public event Action LaserShot;
+
         public void OnLaserAmmunitionChanged(int currentLaserShots) =>
             _laserAmmunition.Value = currentLaserShots;
 
         public void OnLaserCooldownChanged(float cooldown) =>
             _laserCooldown.Value = cooldown;
+
+        public void OnLaserShot() =>
+            LaserShot?.Invoke();
     }
 }

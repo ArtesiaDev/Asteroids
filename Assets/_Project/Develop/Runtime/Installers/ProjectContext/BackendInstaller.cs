@@ -1,4 +1,6 @@
 ﻿using Develop.Backend.Ads;
+using Develop.Backend.Analytics;
+using Develop.Runtime.Core.Configs;
 using Zenject;
 
 namespace Develop.Runtime.Installers.ProjectContext
@@ -13,6 +15,11 @@ namespace Develop.Runtime.Installers.ProjectContext
             Container.BindInterfacesTo<BannerCallbacks>().AsSingle();
             Container.BindInterfacesTo<InterstitialCallbacks>().AsSingle();
             Container.BindInterfacesTo<RewardedCallbacks>().AsSingle();
+            
+            Container.BindInterfacesTo<GameAnalyticsAds>().AsSingle();
+            Container.BindInterfacesTo<GameAnalyticsGamePlay>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<PlayerConfig>().AsSingle().NonLazy();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Develop.Runtime.Core.Starship
 
         private void Steer()
         {
-            float rotation = -_input.Steer * _config.RotationSpeed * Time.deltaTime;
+            float rotation = -_input.Steer * _config.SteeringSpeed * Time.deltaTime;
             _transform.Rotate(0, 0, rotation);
 
             PlayerSteered?.Invoke();

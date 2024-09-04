@@ -1,46 +1,68 @@
-﻿using UnityEngine;
+﻿using System;
+using GameAnalyticsSDK;
+using Newtonsoft.Json.Linq;
+using UnityEngine;
+using Zenject;
 
 namespace Develop.Runtime.Core.Configs
 {
-    [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Configs/PlayerConfig", order = 0)]
-    public class PlayerConfig : ScriptableObject, ISteeringConfig, IMoveConfig, IBulletShootingConfig,
-        ILaserShootingConfig
+    public class PlayerConfig : IInitializable, IDisposable, ISteeringConfig, IMoveConfig, IBulletShootingConfig,
+        ILaserShootingConfig, IPlayerSpawnConfig
     {
-        [field: Header("Steering System")]
-        [field: SerializeField]
-        public float RotationSpeed { get; private set; }
+        private const string PLAYER_CONFIG = "PlayerConfig";
 
-        [field: Header("Mover System")]
-        [field: SerializeField]
-        public float ThrustPower { get; private set; }
+        public float SteeringSpeed { get; private set; } = 200f;
 
-        [field: SerializeField] public float MaxSpeed { get; private set; }
+        public float MoveThrustPower { get; private set; } = 1.5f;
+        public float MaxSpeed { get; private set; } = 10f;
 
-        [field: Header("BulletShooting")]
-        [field: SerializeField]
-        public float FireRate { get; private set; }
+        public float BulletFireRate { get; private set; } = 0.3f;
+        [field: Range(0.8f, 10f)] public float BulletOffsetCoefficient { get; private set; } = 0.8f;
+        public float BulletSpeed { get; private set; } = 10f;
 
-        [field: SerializeField, Range(0.8f, 10f)]
-        public float BulletOffsetCoefficient { get; private set; }
+        public float LaserCooldown { get; private set; } = 5f;
+        [field: Range(0.8f, 10f)] public float LaserOffsetCoefficient { get; private set; } = 0.8f;
+        public int LaserAmmunition { get; private set; } = 2;
+        public float LaserLifeTime { get; private set; } = 0.1f;
+        public float LaserReloadTime { get; private set; } = 10f;
 
-        [field: SerializeField] public float Speed { get; private set; }
-
-        [field: Header("LaserShooting")]
-        [field: SerializeField]
-        public float Cooldown { get; private set; }
-
-        [field: SerializeField, Range(0.8f, 10f)]
-        public float LaserOffsetCoefficient { get; private set; }
-
-        [field: SerializeField] public int Ammunition { get; private set; }
-
-        [field: SerializeField] public float LaserLifeTime { get; private set; }
-        [field: SerializeField] public float ReloadTime { get; private set; }
-
-        [field: Header("Spawn")]
-        [field: SerializeField]
         public Vector2 SpawnPoint { get; private set; }
+        public float SpawnClearRadius { get; private set; } = 1f;
 
-        [field: SerializeField] public float ClearRadius { get; private set; }
+        public void Initialize()
+        {
+            ConfigsUpdate();
+            GameAnalytics.OnRemoteConfigsUpdatedEvent += ConfigsUpdate;
+        }
+
+        public void Dispose() =>
+            GameAnalytics.OnRemoteConfigsUpdatedEvent -= ConfigsUpdate;
+
+        private void ConfigsUpdate()
+        {
+            var jsonConfig = GameAnalytics.GetRemoteConfigsValueAsString(PLAYER_CONFIG);
+            if (jsonConfig == null) return;
+
+            var config = JObject.Parse(jsonConfig);
+            
+            SteeringSpeed = config.Value<int>(nameof(SteeringSpeed));
+
+            MoveThrustPower = config.Value<int>(nameof(MoveThrustPower));
+            MaxSpeed = config.Value<int>(nameof(MaxSpeed));
+
+            BulletFireRate = config.Value<int>(nameof(BulletFireRate));
+            BulletOffsetCoefficient = config.Value<int>(nameof(BulletOffsetCoefficient));
+            BulletSpeed = config.Value<int>(nameof(BulletSpeed));
+
+            LaserCooldown = config.Value<int>(nameof(LaserCooldown));
+            LaserOffsetCoefficient = config.Value<int>(nameof(LaserOffsetCoefficient));
+            LaserAmmunition = config.Value<int>(nameof(LaserAmmunition));
+            LaserLifeTime = config.Value<int>(nameof(LaserLifeTime));
+            LaserReloadTime = config.Value<int>(nameof(LaserReloadTime));
+
+            SpawnPoint = new Vector2(config.Value<float>($"{nameof(SpawnPoint)}.x"),
+                config.Value<float>($"{nameof(SpawnPoint)}.y"));
+            SpawnClearRadius = config.Value<int>(nameof(SpawnClearRadius));
+        }
     }
 }

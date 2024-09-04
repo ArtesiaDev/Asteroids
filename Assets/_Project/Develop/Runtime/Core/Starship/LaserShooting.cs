@@ -16,6 +16,7 @@ namespace Develop.Runtime.Core.Starship
     {
         private readonly ReactiveProperty<int> _laserAmmunition = new ReactiveProperty<int>();
         private readonly ReactiveProperty<float> _laserCooldown = new ReactiveProperty<float>();
+        private event Action LaserShot;
 
         private readonly ILaserShootingConfig _config;
         private readonly ILaserShootAction _input;
@@ -37,9 +38,11 @@ namespace Develop.Runtime.Core.Starship
 
         public async void Initialize()
         {
-            _laserAmmunition.Subscribe(value => _laserSignalsHandler.OnLaserAmmunitionChanged(value)).AddTo(_disposable);
+            _laserAmmunition.Subscribe(value => _laserSignalsHandler.OnLaserAmmunitionChanged(value))
+                .AddTo(_disposable);
             _laserCooldown.Subscribe(value => _laserSignalsHandler.OnLaserCooldownChanged(value)).AddTo(_disposable);
-            _laserAmmunition.Value = _config.Ammunition;
+            LaserShot += _laserSignalsHandler.OnLaserShot;
+            _laserAmmunition.Value = _config.LaserAmmunition;
             await _laserFactory.Prepare();
             await Reload();
         }
@@ -49,7 +52,8 @@ namespace Develop.Runtime.Core.Starship
             _laserFactory.Clear();
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
-           _disposable.Dispose();
+            _disposable.Dispose();
+            LaserShot -= _laserSignalsHandler.OnLaserShot;
         }
 
         public void FixedTick() =>
@@ -61,7 +65,8 @@ namespace Develop.Runtime.Core.Starship
             {
                 if (_laserAmmunition.Value > 0 && _laserCooldown.Value == 0)
                 {
-                   _laserAmmunition.Value--;
+                    _laserAmmunition.Value--;
+                    LaserShot?.Invoke();
 
                     var laser = await CreateLaser();
 
@@ -78,10 +83,13 @@ namespace Develop.Runtime.Core.Starship
             {
                 try
                 {
-                    await UniTask.Delay(TimeSpan.FromSeconds(_config.ReloadTime), DelayType.DeltaTime,
+                    await UniTask.Delay(TimeSpan.FromSeconds(_config.LaserReloadTime), DelayType.DeltaTime,
                         PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
                 }
-                catch {break;}
+                catch
+                {
+                    break;
+                }
 
                 _laserAmmunition.Value++;
             }
@@ -89,14 +97,16 @@ namespace Develop.Runtime.Core.Starship
 
         private async UniTask Cooldown()
         {
-            _laserCooldown.Value = _config.Cooldown;
-            
+            _laserCooldown.Value = _config.LaserCooldown;
+
             try
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(_config.Cooldown), DelayType.DeltaTime,
+                await UniTask.Delay(TimeSpan.FromSeconds(_config.LaserCooldown), DelayType.DeltaTime,
                     PlayerLoopTiming.FixedUpdate, _cancellationTokenSource.Token);
             }
-            catch { }
+            catch
+            {
+            }
 
             _laserCooldown.Value = 0f;
         }

@@ -40,7 +40,7 @@ namespace Develop.Runtime.Core.Starship
         {
             if (_input.Move)
             {
-                Vector2 thrust = _transform.up * _config.ThrustPower;
+                Vector2 thrust = _transform.up * _config.MoveThrustPower;
                 _rb.AddForce(thrust, ForceMode2D.Force);
             }
 
